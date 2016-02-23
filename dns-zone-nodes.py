@@ -54,27 +54,6 @@ subnet = ip_network('2a06:4b00:1000::/64')
 mapped_hostnames = map_hostnames_to_addresses(nodes, hostname_regex, subnet)
 max_hostname_length = max(map(len, mapped_hostnames))
 
-# lol
-print(
-	'''$ORIGIN nodes.marburg.link.
-$TTL 1h
-@{s: <{path_width}} IN SOA         altair.reis.asia. freifunk.hsmr.cc. (
-{s: <{path_width}}                 {serial}      ; serial
-{s: <{path_width}}                 2h              ; Refresh
-{s: <{path_width}}                 30m             ; Retry
-{s: <{path_width}}                 3w              ; Expire
-{s: <{path_width}}                 1h )            ; Negative Cache TTL
-
-@{s: <{path_width}} IN NS          altair.reis.asia.
-@{s: <{path_width}} IN NS          wega.reis.asia.
-@{s: <{path_width}} IN NS          arturo.reis.asia.
-	'''.format(
-		serial=datetime.utcnow().strftime('%Y%m%d%H'),
-		s=' ',
-		path_width=max_hostname_length + 6
-	)
-)
-
 for hostname, address in sorted(mapped_hostnames.items()):
 	print(
 		'{hostname: <{path_width}} IN AAAA        {address}'.format(
