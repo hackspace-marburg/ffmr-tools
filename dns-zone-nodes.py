@@ -31,6 +31,7 @@ def map_hostnames_to_addresses(nodes, hostname_regex, subnet) -> dict:
 	for node in nodes.values():
 		try:
 			hostname = node['nodeinfo']['hostname']
+			hostname = hostname.lower().replace('_', '-')
 			address = [
 				address for address 
 				in node['nodeinfo']['network']['addresses'] 
@@ -56,10 +57,10 @@ max_hostname_length = max(map(len, mapped_hostnames))
 
 for hostname, address in sorted(mapped_hostnames.items()):
 	print(
-		'{hostname: <{path_width}} IN AAAA        {address}'.format(
+		'{hostname: <{path_width}}        IN AAAA        {address}'.format(
 			hostname=hostname,
 			address=address,
-			path_width=max_hostname_length + 7
+			path_width=max_hostname_length
 		)
 	)
 	
