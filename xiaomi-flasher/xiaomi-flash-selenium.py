@@ -234,9 +234,9 @@ class FlashXiaomiRouter:
 
         print('#' * 50)
         SERVER = "http://update.marburg.link/experimental/sysupgrade/"
-        FIRMWARE = ("gluon-ffmr-4-experimental-"
+        FIRMWARE = ("gluon-ffmr-5-experimental-"
                     "xiaomi-miwifi-mini-sysupgrade.bin")
-        MD5HASH = '6cc1c8c22af5eef271cc2703052f68b5'
+        MD5HASH = '9238621ad4f42f5fc7db085927c20fcd'
         HOST = "192.168.31.1"
         user = "root"
         password = "freumich"
@@ -274,6 +274,9 @@ class FlashXiaomiRouter:
         print tn.read_until('root@XiaoQiang:/tmp#')
         #import pdb
         #pdb.set_trace()
+        print('setting nameserver to 208.67.222.222')
+        tn.write('echo "nameserver 208.67.222.222" > /etc/resolv.conf\n')
+        tn.read_until('root@XiaoQiang:/tmp#')
         print('now start wget...')
         print('wget ' + SERVER + FIRMWARE + ' \n')
         tn.write('wget ' + SERVER + FIRMWARE + ' \n')
