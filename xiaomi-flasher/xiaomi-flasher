@@ -1,0 +1,95 @@
+#!/usr/bin/env python2
+
+"""
+Use browser scripting to control a Xiaomi router via the original web interface.
+Abuse vulnerability to get Telnet access. Replace firmware with custom OpenWRT.
+
+(c) 2016 Oleander Reis, Christoph Scheid, Tobias Weber
+"""
+
+import logging  # TODO add everywhere.
+import os
+import re
+import subprocess
+import sys
+import telnetlib
+import time
+
+import selenium
+import selenium.webdriver
+
+NotFound = selenium.common.exceptions.NoSuchElementException
+RETURN = selenium.webdriver.common.keys.Keys.RETURN
+
+ADDRESS = '192.168.31.1'  # Xiaomi default.
+
+def ping(address):
+    return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
+        stdout=subprocess.PIPE) == 0  # TODO distinguish errors 1 and 2.
+
+def initial_setup(driver, address, key, password):
+    """
+    Return True or an error string.
+    """
+    driver.get('http://%s' % address)
+    if 'Mi Router' not in driver.title:
+        return 'page not recognized'  # TODO exceptions.
+    if 'Enter administrator password' in driver.page_source:
+        return 'already set up'
+    try:
+        driver.find_element_by_id('btnStart').click()
+        time.sleep(15)
+        driver.find_element_by_link_text('Mode (Set up Wi-Fi network)').click()
+        time.sleep(5)
+    except NotFound:
+        return 'page lacks button'
+    try:
+        field = driver.find_element_by_name('wifipwd')
+        field.click()
+        field.send_keys(key)
+        field.send_keys(RETURN)
+        time.sleep(3)
+    except NotFound:
+        return 'page lacks key field'
+    try:
+        field = driver.find_elements_by_name('routerpwd')[1]
+        field.click()
+        field.send_keys(password)
+        time.sleep(1)
+        field.send_keys(RETURN)
+        time.sleep(10)
+    except (NotFound, IndexError):
+        return 'page lacks password field'
+    PROGRESS = 'Setting up'
+    if PROGRESS not in driver.page_source:
+        return 'saving password took too long'
+    while PROGRESS in driver.page_source:
+        time.sleep(5)  # TODO timeout.
+    return True
+
+def login(driver, address, password):
+    """
+    Return token or False.
+    """
+    driver.get('http://%s' % address)
+    if 'Enter administrator password' not in driver.page_source:
+        return False  # TODO exceptions.
+    try:
+        field = driver.find_element_by_id('password')
+        field.click()
+        field.send_keys(password)
+        field.send_keys(RETURN)
+        time.sleep(10)
+    except NotFound:
+        return False
+    match = re.search(r'stok=([a-f0-9]+)', driver.current_url)
+    if not match:
+        return False
+    return match.group(1)
+
+if __name__ == '__main__':
+    PASSWORD = 'freudich'
+    driver = selenium.webdriver.Firefox()
+    driver.set_window_size(800, 600)
+#    print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
+    print(login(driver, ADDRESS, PASSWORD))
