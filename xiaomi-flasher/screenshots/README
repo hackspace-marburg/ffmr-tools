@@ -1,0 +1,20 @@
+## Take screenshots via SSH
+
+	export DISPLAY=:1
+	gnome-screenshot --window --file=1.png
+
+## Initial Setup
+
+1. connect fresh router to power and Ethernet
+2. wait forever until Flash Station gets IP
+3. visit default IP in browser (see screenshot 1)
+4. wait 11 seconds (screenshot 2)
+5. click mode (3)
+6. enter key (4)
+7. enter password (5)
+8. wait 10 seconds (6)
+
+## Login
+
+1. after wizard is completed, visit URL again (see screenshot 7)
+2. enter password (8)

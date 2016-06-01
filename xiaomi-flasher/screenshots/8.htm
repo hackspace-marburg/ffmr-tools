@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="ie6 oldie" lang="zh"><![endif]-->
+<!--[if IE 7]><html class="ie7 oldie" lang="zh"><![endif]-->
+<!--[if IE 8]><html class="ie8 oldie" lang="zh"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh"><!--<![endif]--><head>
+<meta http-equiv="X-UA-Compatible" content="edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="renderer" content="webkit">
+<!--[if lt IE 7]>
+<meta http-equiv="refresh" content="0; url=http://miwifi.com/cgi-bin/luci/web/ieblock" />
+<![endif]-->
+<!--[if gte IE 9]>
+<style>
+body {
+   filter: none;
+}
+</style>
+<![endif]-->
+<title>Mi Router</title>
+<meta name="viewport" content="width=1200">
+<link href="8_files/bc.css" rel="stylesheet">
+<link href="8_files/index.css" rel="stylesheet">
+</head>
+<body>
+<div id="doc">
+    
+<noscript>
+<div class="noscript">If you disable Javascript, you won&#39;t be able to miwifi.com to manage your router.</div>
+</noscript>
+<script>
+var GLOBALHEADER = true;
+</script>
+<div id="hd">
+    <div class="inner">
+        <div class="mod-head clearfix">
+            <h1 id="logo"><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/home"><img src="8_files/logo.png" alt="Mi Router"></a></h1>
+            <div id="nav">
+                
+                <ul>
+                    <li class="active"><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/home">Status</a></li>
+                    <li><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/store">Storage</a></li>
+                    <li><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/setting/wifi">Settings</a></li>
+                    <li><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/prosetting/qos">Advanced</a></li>
+                </ul>
+                
+            </div>
+            <div id="userbar">
+                <span id="sysnotice" class="ico-notice"></span>
+                <span id="sysmenu" class="name s-dropdown">Xiaomi_06E6 (Home)</span>
+            </div>
+        </div>
+
+        
+
+        
+
+        
+
+        
+    </div>
+</div>
+
+    <div class="mod-netmap">
+        <div class="inner clearfix">
+            <div class="devices nav-tab">
+                <img src="8_files/ico_devices.png">
+                <p>Devices</p>
+                <div class="status status-devices" id="statusDevices"><b class="devcountonline">1</b>Devices</div>
+            </div>
+            <div id="devline" class="line line-ok"></div>
+            <div class="router nav-tab active">
+                <img src="8_files/router_r1cm_101.png" height="142">
+                <p>Xiaomi_06E6 (Home)</p>
+                <table class="status-wifi" id="statusWifi">
+                    <tbody><tr>
+                        <td class="l">
+                            <div class="status"><i id="ssid24status" class="ico ico-wifi-on"></i><span>2.4G: </span><b id="ssid24val">Xiaomi_06E6</b></div>
+                        </td>
+                        <td class="c">|</td>
+                        <td class="r">
+                            <div class="status"><i id="ssid50status" class="ico ico-wifi-on"></i><span>5G:</span><b id="ssid50val">Xiaomi_06E6_5G</b></div>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div>
+            <div id="netline" class="line line-err"></div>
+            <div class="internet nav-tab">
+                <img src="8_files/ico_internet.png">
+                <p>Internet</p>
+                <div class="status status-internet" id="statusInternet"><b id="bandwidth">0.00</b>M</div>
+            </div>
+        </div>
+    </div>
+    <div id="bd">
+        <div class="mod-devicestatus nav-tab-content" style="display:none;">
+            <div id="devicesTables"></div>
+        </div>
+        <div style="display: block;" class="mod-routerstatus nav-tab-content clearfix">
+            <div class="routerinfo">
+                <div class="hd">
+                    <h3>Info</h3>
+                </div>
+                <div class="bd">
+                    <table>
+                        <tbody><tr>
+                            <th>Model</th>
+                            <th>System version</th>
+                            <th>MAC address</th>
+                            <th>SN</th>
+                        </tr>
+                        <tr>
+                            <td id="routermodel">Mi Router Mini(R1CM)</td>
+                            <td id="routerversion">MiWiFi Stable 2.2.105</td>
+                            <td id="routermac">F0:B4:29:59:06:E6</td>
+                            <td id="routersn">11380/00028717</td>
+                        </tr>
+                    </tbody></table>
+                </div>
+            </div>
+            <div class="status-panel status-panel-first">
+                <div class="hd">
+                    <h3>Status</h3>
+                    <p>Download speed<b class="currentspeed">0KB/S</b> <i class="div">|</i> Upload<b class="currentupspeed">0.19KB/S</b></p>
+                </div>
+                <div class="bd">
+                    <div class="canvas linechart" id="trafficChart"><svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" width="489" version="1.1" height="200"><desc>Created with Raphaël 2.1.2</desc><defs></defs><path stroke-dasharray="1,3" d="M0,0L489,0Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,40L489,40Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,80L489,80Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,120L489,120Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,160L489,160Z" stroke="#d9d9d9" fill="none" style=""></path><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="10" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">10M</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="50" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">8M</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="90" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">6M</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="130" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">4M</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="170" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">2M</tspan></text><path stroke-linejoin="round" stroke-width="2" d="M0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,200,326,200,380,200C435,200,380,200,435,200C489,200,489,200,489,200" stroke="#33cc33" fill="none" style="stroke-linejoin: round;"></path><path fill-opacity="0.4" opacity="0.5" d="M0,200L0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,200,326,200,380,200C435,200,380,200,435,200C489,200,489,200,489,200L489,200Z" stroke="none" fill="#35cc35" style="opacity: 0.5;"></path><path stroke-linejoin="round" stroke-width="2" d="M0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,200,326,200,380,200C435,200,380,200,435,200C489,200,489,200,489,200" stroke="#2673bf" fill="none" style="stroke-linejoin: round;"></path><path fill-opacity="0.4" opacity="0.5" d="M0,200L0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,200,326,200,380,200C435,200,380,200,435,200C489,200,489,200,489,200L489,200Z" stroke="none" fill="#2673bf" style="opacity: 0.5;"></path></svg>
+                    </div>
+                </div>
+                <div class="ft">
+                    Average speed: <span class="val" id="avgspeed">0KB/S</span> <i class="div">|</i> Max download speed: <span class="val" id="maxdownloadspeed">0KB/S</span>
+                </div>
+            </div>
+            <div class="status-panel">
+                <div class="hd">
+                    <h3>Connected devices bandwidth</h3>
+                    <p>Client: <b class="devcountonline">1</b></p>
+                </div>
+                <div class="bd">
+                    <div class="canvas">
+                        <table>
+                            <tbody><tr>
+                                <td valign="top" width="200">
+                                    <div class="chart" id="piechart" style="width:180px; height:180px;"><svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" width="180" version="1.1" height="180"><desc>Created with Raphaël 2.1.2</desc><defs></defs><circle stroke-width="0" style="" stroke="#ffffff" fill="#33cc33" r="88" cy="90" cx="90"></circle><circle stroke-width="0" fill-opacity="0.35" style="fill-opacity: 0.35;" stroke="#000" fill="#ffffff" r="86" cy="90" cx="90"></circle></svg></div>
+                                </td>
+                                <td valign="top">
+                                    <div id="piecharttable" class="charttable"><ul class="list"><li class="item"><i class="ico color" style="background:#33cc33;"></i><span class="name">KAD_HSMR</span><span class="value" style="color:#33cc33;">0.96KB</span><span class="percent">100.0%</span></li></ul></div>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+                <div class="ft">
+                    Total download:<span class="val" id="downloadcount">0KB</span> <i class="div">|</i> Total upload: <span class="val" id="uploadcount">238.05KB</span> <i class="div">|</i> Devices: <span class="val" id="devcountall">1</span>
+                </div>
+            </div>
+            <div class="hr"></div>
+            <div class="status-panel status-panel-first">
+                <div class="hd">
+                    <h3>CPU</h3>
+                    <p>CPU load<b id="cpuused">65.92%</b></p>
+                </div>
+                <div class="bd">
+                    <div class="canvas" id="cpuChart"><svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" width="489" version="1.1" height="200"><desc>Created with Raphaël 2.1.2</desc><defs></defs><path stroke-dasharray="1,3" d="M0,0L489,0Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,40L489,40Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,80L489,80Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,120L489,120Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,160L489,160Z" stroke="#d9d9d9" fill="none" style=""></path><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="10" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">100%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="50" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">80%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="90" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">60%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="130" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">40%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="170" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">20%</tspan></text><path stroke-linejoin="round" stroke-width="2" d="M0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,197,326,200,380,197C435,68,380,197,435,68C489,68,489,68,489,68" stroke="#33cc33" fill="none" style="stroke-linejoin: round;"></path><path fill-opacity="0.4" opacity="0.5" d="M0,200L0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,197,326,200,380,197C435,68,380,197,435,68C489,68,489,68,489,68L489,200Z" stroke="none" fill="#35cc35" style="opacity: 0.5;"></path></svg></div>
+                </div>
+                <div class="ft">
+                    CPU: <span class="val" id="cpucore">1</span> <i class="div">|</i> Core frequency: <span class="val" id="cpuhz">580MHz</span>
+                </div>
+            </div>
+            <div class="status-panel">
+                <div class="hd">
+                    <h3>Storage</h3>
+                    <p>Used <b id="memused">37.00%</b></p>
+                </div>
+                <div class="bd">
+                    <div class="canvas" id="memChart"><svg style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg" width="489" version="1.1" height="200"><desc>Created with Raphaël 2.1.2</desc><defs></defs><path stroke-dasharray="1,3" d="M0,0L489,0Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,40L489,40Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,80L489,80Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,120L489,120Z" stroke="#d9d9d9" fill="none" style=""></path><path stroke-dasharray="1,3" d="M0,160L489,160Z" stroke="#d9d9d9" fill="none" style=""></path><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="10" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">100%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="50" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">80%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="90" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">60%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="130" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">40%</tspan></text><text font-size="12px" fill="#999999" stroke="none" font="10px &quot;Arial&quot;" text-anchor="start" y="170" x="1" style="text-anchor: start; font: 12px &quot;Arial&quot;;"><tspan dy="4">20%</tspan></text><path stroke-linejoin="round" stroke-width="2" d="M0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,128,326,200,380,128C435,122,380,128,435,122C489,126,489,126,489,126" stroke="#33cc33" fill="none" style="stroke-linejoin: round;"></path><path fill-opacity="0.4" opacity="0.5" d="M0,200L0,200C0,200,0,200,54,200C109,200,54,200,109,200C163,200,109,200,163,200C217,200,163,200,217,200C272,200,217,200,272,200C326,200,272,200,326,200C380,128,326,200,380,128C435,122,380,128,435,122C489,126,489,126,489,126L489,200Z" stroke="none" fill="#35cc35" style="opacity: 0.5;"></path></svg></div>
+                </div>
+                <div class="ft">
+                    Storage: <span class="val" id="memtotal">128 M</span> <i class="div">|</i> Type: <span class="val" id="memtype">DDR2</span> <i class="div">|</i> Frequency: <span class="val" id="memhz">800MHz</span>
+                </div>
+            </div>
+        </div>
+        <div class="mod-internetstatus nav-tab-content" style="display:none;">
+            <div class="internet-panel first">
+                <div class="hd">
+                    <h3>Internet connection</h3>
+                </div>
+                <div class="bd">
+                    <table id="wanStatusContent"></table>
+                </div>
+            </div>
+
+            <div class="internet-panel">
+                <div class="hd">
+                    <h3>Internet speed</h3>
+                </div>
+                <div class="bd">
+                    <table>
+                        <tbody><tr class="first">
+                            <td>
+                                <dl>
+                                    <dt>Download bandwidth</dt>
+                                    <dd><span id="banddownload">0.00</span>Mbps</dd>
+                                </dl>
+                            </td>
+                            <td>
+                                <dl>
+                                    <dt>Upload bandwidth</dt>
+                                    <dd><span id="bandupload">0.00</span>Mbps</dd>
+                                </dl>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <a id="btnSpeedTest" href="#" class="btn btn-primary btn-m"><span>Test again</span></a>
+                                <a data-downband="0.00" data-upband="0.00" id="btnBandset" href="#" class="btn btn-dft btn-m"><span>Change</span></a>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
+            </div>
+            <div class="hr"></div>
+        </div>
+    </div>
+    
+    <div id="ft">
+        <p>Version: 2.2.105 Stable &nbsp;MAC address: F0:B4:29:59:06:E6</p>
+        <p>© 2015 Mi Router<span>|</span><a href="http://www1.miwifi.com/" target="_blank">Offical site</a><span>|</span><a href="http://weibo.com/xiaomiluyouqi" target="_blank">Official Sina Weibo</a><span>|</span><a href="https://land.xiaomi.net/res/e1fdbc3/land/miwifi/wf_2dcode.jpg" target="_blank" id="wechatcode">Official WeChat</a><span>|</span><a href="http://bbs.xiaomi.cn/forum/detail/fid/365" target="_blank">Users</a><span>|</span>Support  400-100-5678</p><p>
+    </p></div>
+
+</div>
+<script type="tmpl/text" id="tmpldeviceswrap">
+<table class="mod-table-devices">
+    <thead>
+        <tr>
+            <th class="s0">{$devtype}</th>
+        {if($devlen > 0 )}
+            <th class="s1">Internet access</th>
+            {if($hasDisk)}
+            <th class="s2">Access hard drive</th>
+            {/if}
+        {/if}
+        </tr>
+    </thead>
+    <tbody>
+    {$deviceslist}
+    </tbody>
+</table>
+</script>
+<script type="tmpl/text" id="tmpldevicesitem">
+<tr class="device-item">
+    <td>
+        <img class="dev-icon" width="60" src="{$devices_icon}" onerror="this.src='img/device_list_err.png'">
+        <div class="dev-info">
+            <div class="name">{$name} &nbsp;&nbsp;{if($isself)}<span class="muted">|&nbsp;Current device</span>{/if}</div>
+            <ul class="devnetinfo clearfix">
+                <li><span class="k">Connected:</span> <span class="v">{$online}</span></li>
+                <li>
+                    {for(var i=0, len=$ip.length; i<len; i++)}
+                    <p><span class="k">IP address:</span> <span class="v">{$ip[i]}</span></p>
+                    {/for}
+                </li>
+                <li><span class="k">MAC address:</span> <span class="v">{$mac}</span></li>
+            </ul>
+        </div>
+    </td>
+    <td class="option">
+        {$option}
+    </td>
+    {if($hasDisk)}
+    <td class="option">
+        {$option2}
+    </td>
+    {/if}
+</tr>
+</script>
+<script type="text/tmpl" id="tmplWaninfo">
+<tr class="first">
+    <td>
+        <dl>
+            <dt>Connection type</dt>
+            <dd>{$wantype}</dd>
+        </dl>
+    </td>
+    <td>
+        <dl>
+            <dt>IP address</dt>
+            <dd>{$ip}</dd>
+        </dl>
+    </td>
+</tr>
+<tr>
+    <td>
+        <dl>
+            <dt>DNS</dt>
+            <dd>{$dns}</dd>
+        </dl>
+    </td>
+    <td>
+        <dl>
+            <dt>Gateway address</dt>
+            <dd>{$gateway}</dd>
+        </dl>
+    </td>
+</tr>
+</script>
+<script type="text/tmpl" id="tmpldevicesempty">
+<tr class="empty">
+    <td colspan="3">No devices connected</td>
+</tr>
+</script>
+<script type="text/tmpl" id="tmpldevices5gempty">
+<tr class="empty">
+    <td colspan="3">
+        <div class="devices5gempty">
+            <i class="ico-wifi-5g"></i>
+            <h4>No connected devices</h4>
+            <p>5G Wi-Fi is faster and better for your TV or other devices not far from the router</p>
+            
+        </div>
+    </td>
+</tr>
+</script>
+<script type="text/tmpl" id="tmpldevicesguestempty">
+<tr class="empty">
+    <td colspan="3">
+        
+        <div class="devicesguestempty">
+            <i class="ico-wifi-guest"></i>
+            <h4>Guest mode is off</h4>
+            <p>Networks are completely independent from each other.</p>
+            <a href="/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/setting/wifi" class="btn btn-dft btn-l"><span>Turn on Guest Wi-Fi</span></a>
+        </div>
+        
+    </td>
+</tr>
+</script>
+
+<!--[if lt IE 7]>
+<script>
+try{ document.execCommand("BackgroundImageCache",false,true);} catch(e){}
+</script>
+<![endif]-->
+<div class="mask-menu" id="maskMenu" style="position:fixed;left:0;top:0; width:100%; height:100%; z-index:2; display:none;"></div>
+<div id="dropmenu" class="dropmenu" style="z-index:3; display:none;">
+    <ul>
+        <li><a href="#" id="toRename">Change router name</a></li>
+        <li><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/setting/upgrade">Updating…</a></li>
+        <li><a href="#" id="toDownloadClient">Download APP</a></li>
+        <li><a href="#" id="toReboot">Reboot</a></li>
+        
+        <li class="last"><a href="http://192.168.31.1/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/logout">Sign out</a></li>
+    </ul>
+</div>
+<div id="noticebar" class="noticebar" style="z-index:3; display:none;">
+    <i class="ico-arrow"></i>
+    <div class="content"></div>
+</div>
+<script>
+var i18n = {};
+i18n.dialog = {
+	ok: 'OK',
+	cancel: 'Cancel',
+	loading: 'Just a sec…',
+	dlgtitle: 'Message box'
+};
+i18n.valid = {
+    n_integer: 'Enter a complete {$0}',
+    n_format: 'Use the following format &#34;{$0}&#34;',
+    n_upper: 'Use {$0} characters or less', //注意：{$0}表示允许值，{$1}表示实际值
+    n_lower: 'Use {$0} characters or more',
+    nrange_from: 'Input range vaild',
+    nrange_to: 'Input range vaild',
+    n_useless_zero: 'Look&#39;s like there&#39;s an additional &#34;0&#34; at the beginning of the value you entered.',
+    d_format: 'Enter format &#34;YYYY-MM-DD&#34;',
+    d_upper: 'Date can&#39;t be later than {$0}',
+    d_lower: 'Date can&#39;t be earlier than {$0}',
+    daterange_from: 'Start date can&#39;t be later than end date.',
+    daterange_to: 'End date can&#39;t be earlier than start date',
+    daterange_larger_span: "Can&#39;t exceed {$0} days",
+    text_longer: 'Use {$0} characters or less', //'{$1}字太多，最多允许{$0}字'
+    text_shorter: 'Use {$0} characters or more', //'{$1}字太少，最少允许{$0}字'
+    bytetext_longer: 'Use {$0} characters or more', //'{$1}字节太多，最多允许{$0}字节'
+    bytetext_shorter: 'Use {$0} characters or more', //'{$1}字节太少，最少允许{$0}字节'
+    richtext_longer: 'Use {$0} characters or less',
+    richtext_shorter: 'Use {$0} characters or more',
+    _reconfirm: 'Passwords don&#39;t match.',
+    _time: 'The format of the date you entered is invalid.',
+    _minute: 'The format of the date you entered is invalid.',
+    _email: 'Check the email address you ented',
+    _mobilecode: 'Check the phone number you entered',
+    _phone: 'Check the phone number you entered',
+    _phonewithext: 'Check the phone number you entered',
+    _phonezone: 'Check the area code you entered',
+    _phonecode: 'Check the phone number you entered',
+    _phoneext: 'Check the phone number extension you entered',
+    _zipcode: 'Check the zip code you entered',
+    _idnumber: 'Check the ID number you entered',
+    _bankcard: 'Check the account number you entered',
+    _cnname: 'Check the name you entered',
+    _vcode: 'Check the verification code you entered',
+    _imgfile: 'Only jpg, jpeg, png, gif, tif, or bmp file types are supported.',
+    _regexp: 'Check input fields',
+    _magic: 'Check input fields',
+    _req_text: 'Enter',
+    _req_select: 'Choose {$0}',
+    _req_file: 'Upload {$0}',
+    _logicrequired: '{$0} is invalid.',
+    _ssid: 'Name can&#39;t contain special characters',
+    _macaddr: 'MAC address format is invalid',
+    _weppassword: 'The password you entered is incorrect.',
+    _wifipassword: 'Can&#39;t contain Chinese characters.',
+    _ipaddr: 'IP address consists of four numbers, each ranging from 0 to 255, separated by dots (e.g. 120.134.33.9) ',
+    _url: 'Enter full URL (e.g. http://miwifi.com)'
+};
+</script>
+<script src="8_files/jquery-1.js"></script>
+<script src="8_files/qwrap.js"></script>
+<script src="8_files/raphael.js"></script>
+<script src="8_files/sha1.js"></script>
+<script src="8_files/aes.js"></script>
+<script src="8_files/valid.js"></script>
+<script src="8_files/selectbeautify.js"></script>
+<script src="8_files/jquery.js"></script>
+<script src="8_files/jquery_002.js"></script>
+<script>
+(function(){
+    var hardwareModel = 'R1CM',
+        R1CM = hardwareModel === 'R1CM',
+        R1D = hardwareModel === 'R1D',
+        R2D = hardwareModel === 'R2D';
+    var G_CONFIG = {
+        R1CM : R1CM,
+        R1D: R1D,
+        R2D: R2D
+    };
+    var G_FEATURES = $.parseJSON('{"hardware":{".name":"hardware",".type":"features","disk":"0",".index":4,".anonymous":false,"usb":"1"},"apps":{".name":"apps",".type":"features","apptc":"0",".anonymous":false,".index":3},"wifi":{".name":"wifi",".type":"features","wifi24":"1","wifi50":"1","wifiguest":"0",".anonymous":false,".index":1},"apmode":{".name":"apmode",".type":"features",".index":2,"wifiapmode":"1",".anonymous":false,"lanapmode":"1"},"system":{".name":"system",".type":"features","shutdown":"0","i18n":"1","downloadlogs":"0",".anonymous":false,".index":0}}');
+    window['G_CONFIG'] = G_CONFIG;
+    window['G_FEATURES'] = G_FEATURES;
+}())
+</script>
+
+<script>
+// reboot
+var global_api_reboot = {
+	url : '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/reboot',
+	param : {"client":"web"}
+};
+function reboot_window( needconfirm ) {
+	console.log( needconfirm );
+	var reboot = function(){
+			$.getJSON( global_api_reboot.url, global_api_reboot.param, function( rsp ) {
+				if( rsp.code !== 0 ){
+					$.alert( rsp.msg ).time( 1.5*1000 );
+				} else {
+					var ip = rsp.lanIp[0].ip;
+					rebootWait( {
+						lanIp : ip,
+						action : 'Reboot router',
+						refresh : true
+					} );
+				}
+			});
+		};
+	if ( typeof( needconfirm ) !== "undefined" && needconfirm === false ) {
+		reboot();
+		return;
+	}
+	$.confirm('Devices will be disconnected from network while router reboots.',function () {
+			var dlg = this;
+			reboot();
+			dlg.close();
+			return false;
+		});
+}
+// shutdown
+function shutdown_window(){
+	$.confirm('All devices will be disconnected from router.', function () {
+			$.getJSON( '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/shutdown', {}, function( rsp ){
+				if( rsp.code !== 0 ){
+					$.alert(rsp.msg).time( 1.5*1000 );
+				} else {
+					$.loadingDialog({
+						title: 'Turn off router',
+						content: 'Wait until router&#39;s notification turns off before disconnecting power source.'
+					});
+				}
+			});
+		});
+}
+//reset
+function reset_window( format ){
+
+	var reset = (function( format ){
+		var requestURL = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/reset',
+			requestData = {
+				format: format ? 1 : 0
+			},
+			wait = function(){
+				rebootWait( {
+					action : 'Restore to factory settings',
+					refresh : true,
+					lanIp: '192.168.31.1'
+				} );
+			},
+			clearCookies = function (){
+				var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+				if ( keys ) {
+					for (var i = keys.length; i--;){
+						document.cookie = keys[i]+'=0;path=/;expires=' + new Date(0).toUTCString();
+					}
+				}
+			};
+
+		return function(){
+			$.getJSON( requestURL , requestData, function( rsp ) {
+				if ( rsp.code !== 0 ) {
+					$.alert( rsp.msg ).time( 3*1000 );
+				}else{
+					// clear cookies
+					clearCookies();
+					//block wait
+					wait();
+				}
+			});
+		}
+	})( format );
+
+	$.confirm('Restore router to it&#39;s factory settings? You can&#39;t reverse this action.', function(){
+		reset();
+	});
+}
+</script>
+<script type="text/tmpl" id="tplrename">
+<div class="mod-rename-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/login_d_pic.png"></p>
+    <div class="form-rename">
+        <form action="#" class="form" id="routerNameEdit">
+            <div class="form-item">
+                <label class="k">Name</label>
+                <span class="v">
+                    <input type="text" name="routername" id="routername" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Name" value="{$name}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-item">
+                <label class="k">Location</label>
+                <span class="v">
+                    <input type="text" name="locale" id="locale" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Location" value="{$locale}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-contral">
+                <button type="submit" class="btn btn-primary btn-l"><span>Save</span></button>
+            </div>
+        </form>
+    </div>
+</div>
+</script>
+<script type="text/tmpl" id="tplshutdown">
+<div class="mod-reboot-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_shutdown.png"></p>
+    <p class="text">All devices will be disconnected from router&#39;s network.</p>
+    <button id="shutdownAction" type="button" class="btn btn-primary btn-l"><span>Turn off router</span></button>
+</div>
+</script>
+<script type="text/tmpl" id="tplreboot">
+<div class="mod-shutdown-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_reboot.png"></p>
+    <p class="text">Reboot the router and wait 10 seconds. All devices will be disconnected temporarily while the router reboots.</p>
+    <button type="button" id="rebootAction" class="btn btn-primary btn-l"><span>Reboot router</span></button>
+</div>
+</script>
+<script type="text/tmpl" id="tpldownloadclient">
+<div class="mod-downloadclient-dlg">
+    <table>
+        <tr>
+            <td>
+                <i class="ico-down-client ico-down-pc"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqpc_client.exe">Windows</a>
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class="ico-down-client ico-down-mac"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqmac_client.dmg">OSX</a>
+            </td>
+        </tr>
+        <tr class="last">
+            <td>
+                <i class="ico-down-client ico-down-andriod"></i>
+            
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqapp.apk">Android app</a>
+                <img class="onlineimg" src-local="/xiaoqiang/web/img/2dcode.png" src="http://www1.miwifi.com/statics/img/wf_2dcode_an_dl.png">
+            
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class="ico-down-client ico-down-iphone"></i>
+                <a href="https://itunes.apple.com/cn/app/id859962702?mt=8&ls=1">iOS</a>
+                <img class="onlineimg" src-local="/xiaoqiang/web/img/2dcode.png" src="http://www1.miwifi.com/statics/img/wf_2dcode_ios_dl.png">
+            </td>
+        </tr>
+    </table>
+</div>
+</script>
+<script>
+if ( !window.console ) {
+    window.console = {
+        log: function(){}
+    };
+}
+/*
+ * jQuery Tiny Pub/Sub
+ * https://github.com/cowboy/jquery-tiny-pubsub
+ *
+ * Copyright (c) 2013 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ */
+
+(function( $ ) {
+
+    var o = $( {} );
+
+    $.sub = function() {
+        o.on.apply( o, arguments );
+    };
+
+    $.unsub = function() {
+        o.off.apply( o, arguments );
+    };
+
+    $.pub = function() {
+        o.trigger.apply( o, arguments );
+    };
+
+}( jQuery ));
+
+var Encrypt = {
+    key: 'a2ffa5c9be07488bbb04a3a47d3c5f6a',
+    iv: '64175472480004614961023454661220',
+    nonce: null,
+    init: function(){
+        var nonce = this.nonceCreat();
+        this.nonce = nonce;
+        return this.nonce;
+    },
+    nonceCreat: function(){
+        var type = 0;
+        var deviceId = '00:1a:a0:74:e1:52';
+        var time = Math.floor(new Date().getTime() / 1000);
+        var random = Math.floor(Math.random() * 10000);
+        return [type, deviceId, time, random].join('_');
+    },
+    oldPwd : function(pwd){
+        return CryptoJS.SHA1(this.nonce + CryptoJS.SHA1(pwd + this.key).toString()).toString();
+    },
+    newPwd: function(pwd, newpwd){
+        var key = CryptoJS.SHA1(pwd + this.key).toString();
+        key = CryptoJS.enc.Hex.parse(key).toString();
+        key = key.substr(0, 32);
+        key = CryptoJS.enc.Hex.parse(key);
+        var password = CryptoJS.SHA1(newpwd + this.key).toString();
+        var iv = CryptoJS.enc.Hex.parse(this.iv);
+        var aes = CryptoJS.AES.encrypt(
+                password,
+                key,
+                {iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
+            ).toString();
+        return aes;
+    }
+};
+
+var pingRouter = function( on, off, ip ){
+    var online = on || function(){},
+        offline = off || function(){},
+        host = ip || location.host,
+        imgUrl = 'http://' + host + '/img/ping.gif',
+        time = 5000,
+        timecounter = 0,
+        wait = function(){
+            console.log('pingRouter:wait');
+            offline();
+        },
+        done = function(){
+            console.log('pingRouter:done');
+            window.clearInterval( timer );
+            online();
+        },
+        loadImg = function( onload, onerror ){
+            var img = new Image();
+            img.onload = onload;
+            img.onerror = onerror;
+            img.src = imgUrl+'?' + (+new Date());
+        },
+        timer = window.setInterval(function() {
+
+            if ( 'onLine' in navigator ) {
+                if ( navigator.onLine ) {
+                    loadImg(
+                        function(){
+                            done();
+                        }, function(){
+                            wait();
+                        }
+                    );
+                } else {
+                    wait();
+                }
+            }else{
+                loadImg(function(){
+                        done();
+                    }, function(){
+                        wait();
+                });
+            }
+        }, time );
+};
+
+var rebootWait = function ( opt ) {
+    var action = opt.action,
+        ip = opt.lanIp || window.location.host,
+        refresh = opt.refresh || false,
+        tStart = ( +new Date() ),
+        tUse,
+        dlgRebootWait = $.loadingDialog({
+            title : 'Rebooting…',
+            content : action + 'Waiting to reboot…'
+        }),
+        online = function(){
+            dlgRebootWait.content( 'Settings applied' );
+            dlgRebootWait.time( 3*1000 );
+            if( refresh ){
+                window.setTimeout( 'window.top.location.href="http://'+ip+'";',3000 );
+            }
+        },
+        offline = function(){
+            tUse = Math.round( ( ( +new Date() ) - tStart ) / 1000 );
+            if ( tUse > 150 ) {
+                dlgRebootWait.content( 'Couldn&#39;t connect to router automatically. ' );
+                return;
+            }
+            dlgRebootWait.content( action + 'Waiting for Wi-Fi restart,  ({$time}seconds)'.tmpl({time: tUse}) );
+        };
+
+    window.setTimeout( function(){
+        pingRouter( online, offline, ip );
+    }, 1000 * 60 );
+};
+
+(function( $ ){
+
+    function formInit( container ) {
+        var clsInput = 'form-item form-item-input',
+            clsEmpty = 'form-item form-item-empty',
+            clsDisabled = 'form-item-disabled',
+            clsError = 'form-item-err',
+            clsPassword = 'form-item-pwd';
+
+        container = container || 'body';
+        $(container).find( '.form-item input' ).each(function(){
+            var me = this,
+                $me = $( me ),
+                parent = $( me.parentNode.parentNode ),
+                label = parent.find( '.k' ),
+                offsetX = $me.position().left;
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            // some input do not need init
+            if ($me.hasClass('no-init')) {
+                return;
+            }
+            if ( me.value !=='' ) {
+                parent[0].className = clsInput;
+            } else {
+                parent[0].className = clsEmpty;
+                if ( offsetX > 0 ) {
+                    label.css({ 'left': offsetX + 10 });
+                }
+            }
+            if ( me.disabled ) {
+                parent.addClass( clsDisabled );
+            }
+            if ( $me.attr('data-type') === 'password' ) {
+                parent.addClass( clsPassword );
+                parent.append( '<i class="bt-showpwd bt-showpwd-off"></i>' );
+            }
+
+            label.on( 'click', function(e){
+                try {
+                    me.focus();
+                } catch ( ex ) {}
+            });
+
+        });
+        var focusHandler = function(){
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            var me = $( this ),
+                parent = $( this.parentNode.parentNode ),
+                label = parent.find( '.k' ),
+                t = parent.find( '.t' ),
+                classname;
+            if (me.hasClass('no-init')) {
+                return;
+            }
+            if ( parent.hasClass( clsPassword ) ) {
+                classname = clsInput + ' ' + clsPassword;
+            } else {
+                classname = clsInput;
+            }
+            if ( parent.hasClass( clsError ) ) {
+                t.hide();
+            }
+            label.css({ 'left': 'auto' });
+            label.hide();
+            parent[0].className = classname;
+        };
+        var blurHandler = function(){
+            var me = this,
+                $me = $( me ),
+                parent = $( me.parentNode.parentNode ),
+                classname,
+                label = parent.find( '.k' ),
+                offsetX = $me.position().left;
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            if ($(this).hasClass('no-init')) {
+                return;
+            }
+            label.show();
+            if ( me.value == '' ) {
+                if ( parent.hasClass( clsPassword ) ) {
+                    classname = clsEmpty + ' ' + clsPassword;
+                } else {
+                    classname = clsEmpty;
+                }
+                if ( offsetX > 0 ) {
+                    label.css({ 'left': offsetX + 10 });
+                } else {
+                    label.css({ 'left': 12 });
+                }
+                parent[0].className = classname;
+            }
+        };
+        function addInputEvent() {
+            $(container).find( '.form-item input' )
+                .on( 'focus', focusHandler )
+                .on( 'blur', blurHandler );
+        };
+
+        function delInputEvent() {
+            $(container).find( '.form-item input' ).off( 'focus', focusHandler );
+            $(container).find( '.form-item input' ).off( 'blur', blurHandler );
+        };
+        // del password event
+        $( 'body' ).undelegate( '.bt-showpwd', 'click' );
+        $( 'body' ).delegate( '.bt-showpwd', 'click', function(e) {
+            console.log( 'showpwd' );
+            var me = this,
+                meclass = 'bt-showpwd',
+                formItem = $(this).closest('.form-item'),
+                input = formItem.find('input'),
+                inputValue = input.val(),
+                inputWrap = formItem.find('.v'),
+                newinput = '',
+                inputHTML = inputWrap.html();
+
+            if( input.attr('type') == 'password' ){
+                newinput = inputHTML.replace( /type\s*=\s*('|")?password('|")?/ig, 'type="text"');
+                inputWrap.html( newinput ).find('input')[0].value = inputValue;
+                me.className = meclass + ' bt-showpwd-on';
+            }else{
+                newinput = inputHTML.replace( /type\s*=\s*('|")?text('|")?/ig, 'type="password"');
+                inputWrap.html( newinput ).find('input')[0].value = inputValue;
+                me.className = meclass + ' bt-showpwd-off';
+            }
+
+            setTimeout( function() {
+                delInputEvent();
+                addInputEvent();
+            }, 0 );
+        });
+
+
+
+        addInputEvent();
+    }
+
+    $.formInit = formInit;
+
+})(jQuery);
+
+/**
+* byte format
+*/
+function byteFormat(number, precision, isarray){
+    var val,
+        label,
+        ret;
+    precision = precision || 100,
+    isarray = isarray || false;
+    if (number > 1024 * 1024 * 1024) {
+        val = Math.floor( number / 1024 / 1024 / 1024 * precision ) / precision;
+        label = 'GB';
+    } else if (number > 1024 * 1024 && number < 1024 * 1024 * 1024){
+        val = Math.floor( number / 1024 / 1024 * precision ) / precision;
+        label = 'MB';
+    }else{
+        val = Math.floor( number / 1024 * precision ) / precision;
+        label = 'KB';
+    }
+
+    if (isarray) {
+        ret = [val, label];
+    }else{
+        ret = val + label;
+    }
+
+    return ret;
+}
+
+
+function secondToHour(time){
+    var pint = function(num){
+            return parseInt(num, 10);
+        },
+        hour = pint(time / 3600.0),
+        minute = pint((parseFloat(time / 3600.0) - hour) * 60),
+        second = pint(time) - hour * 3600 - minute * 60,
+        format = hour + 'h' + minute + 'm' + second + 's';
+    return format;
+}
+
+function secondToDate(second) {
+    var time = parseFloat(second),
+        pint = function(num){
+            return parseInt(num, 10);
+        },
+        day;
+    if (time !== null && time !== "") {
+        if (time > 60 && time < 60 * 60) {
+            time = pint(time / 60.0) + 'm' + pint((parseFloat(time / 60.0) - pint(time / 60.0, 10)) * 60) + 's';
+        }
+        else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+            time = secondToHour(time);
+        }else if (time >= 24* 60 * 60 ) {
+            day = pint(time  / (3600.0 * 24) );
+            time = time - (day * 3600 * 24);
+            time =  day + 'Days' + secondToHour(time);
+        }
+        else {
+            time = pint(time) + 's';
+        }
+    }
+    return time;
+}
+
+/**
+* placeholder
+*/
+(function( $ ){
+    function placeholder(){
+        var isInputSupported = 'placeholder' in document.createElement('input'),
+            isTextareaSupported = 'placeholder' in document.createElement('textarea'),
+            placeHolder_idx = 100000,
+            g = function(id){
+                return document.getElementById(id);
+            };
+
+        if(isInputSupported || isTextareaSupported){
+            return;
+        }
+        //模拟placeholder
+        $('[placeholder]').each(function(){
+            var el = this;
+            var __placeholderTimer = null;
+            var placeHolderElId = 'placeHolder-' + placeHolder_idx++;
+            el.setAttribute('placeHolderEl', placeHolderElId);
+            el.parentNode.style.position = 'relative';
+            var position = $(el).position();
+            var holderVal = $(el).attr('placeholder');
+            var inputPaddingTop = $(el).css('padding-top');
+            var inputBorderTop = $(el).css('border-top-width');
+            var inputPaddingLeft = $(el).css('padding-left');
+            var inputFontSize = $(el).css('font-size');
+            var elPlaceHolder = $('<span style="color:#999; font-size:16px; padding: 9px 4px; position:absolute; display:none;"></span>');
+            elPlaceHolder.css({
+                left: position.left + 1,
+                top: position.top + 1,
+                'padding-top': inputPaddingTop + inputBorderTop,
+                'padding-left': inputPaddingLeft,
+                'font-size': inputFontSize
+            });
+            elPlaceHolder.html(holderVal);
+            elPlaceHolder.attr('id',placeHolderElId);
+            el.parentNode.insertBefore(elPlaceHolder[0], el);
+
+
+            if (el.value =='') {
+                elPlaceHolder.show();
+            }
+
+            elPlaceHolder.on('click', function(e){
+                try {
+                    el.focus();
+                } catch (ex) {}
+            });
+
+            $(el)
+            .on('keydown', function(e){
+                var oldval = $(this).val();
+                oldval = $.trim(oldval);
+                var placeHolderEl = $(this).attr('placeHolderEl');
+                $(g(placeHolderEl)).hide();
+            })
+            .on('blur', function(e){
+                var oldval;
+                var that = $(this);
+                var placeHolderEl = $(this).attr('placeHolderEl');
+
+                clearTimeout(__placeholderTimer);
+                __placeholderTimer = setTimeout(function() { //在360浏览器下，autocomplete会先blur之后N百毫秒之后再change
+                    oldval = that.val();
+                    oldval = $.trim(oldval);
+                    if(oldval === ''){
+                        $(g(placeHolderEl)).show();
+                    }
+                }, 600);
+            });
+        });
+    }
+    $.placeholder = placeholder;
+})( jQuery );
+
+(function( $ ){
+    function pint(num){
+        return parseInt(num, 10);
+    }
+
+    function secondToHour(time){
+        var hour = pint(time / 3600.0),
+            minute = pint((parseFloat(time / 3600.0) - hour) * 60),
+            second = pint(time) - hour * 3600 - minute * 60,
+            format = hour + 'h' + minute + 'm' + second + 's';
+        return format;
+    }
+
+    function secondToDate(second) {
+        var time = parseFloat(second),
+            day;
+        if (time !== null && time !== "") {
+            if (time > 60 && time < 60 * 60) {
+                time = pint(time / 60.0) + 'm' + pint((parseFloat(time / 60.0) - pint(time / 60.0, 10)) * 60) + 's';
+            }
+            else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+                time = secondToHour(time);
+            }else if (time >= 24* 60 * 60 ) {
+                day = pint(time  / (3600.0 * 24) );
+                time = time - (day * 3600 * 24);
+                time =  day + 'Days' + secondToHour(time);
+            }
+            else {
+                time = pint(time) + 's';
+            }
+        }
+        return time;
+    }
+
+    function secondToDate2(second) {
+        var time = parseFloat(second),
+            num = 0,
+            unit = 'Days';
+        console.log( second, time );
+        if (!isNaN(time)) {
+            if (time > 60 && time < 60 * 60) {
+                num = Math.floor(time / 60.0);
+                unit = 'm';
+            } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+                num = Math.floor(time / 3600.0);
+                unit = 'h'
+            } else if (time >= 24 * 60 * 60 ) {
+                num = Math.floor( time  / (3600.0 * 24) );
+                unit =  'Days';
+            } else {
+                num = Math.floor(time);
+                unit = 's';
+            }
+        }
+        return {
+            num: num,
+            unit: unit
+        };
+    }
+
+    $.secondToHour = secondToHour;
+    $.secondToDate = secondToDate;
+    $.secondToDate2 = secondToDate2;
+})( jQuery );
+
+
+$( document ).ajaxSuccess( function( event, xhr, settings ) {
+    var rsp = xhr.responseText;
+    rsp = $.parseJSON( rsp );
+    // console.log(event, xhr, settings);
+    var ignore = [
+        'api\/xqsystem\/login',
+        'api\/xqsystem\/upgrade_rom'
+    ];
+    for (var i = 0; i < ignore.length; i++) {
+        var ignoreTest = new RegExp(ignore[i]);
+        // console.log( ignoreTest );
+        if ( ignoreTest.test( settings.url ) ) {
+            return;
+        }
+    }
+    if ( rsp.code === 401 || rsp.code === 403) {
+        document.location.href =  'http://' + location.host;
+    }
+} );
+
+$.sub( 'wait', function( evt, data ){
+    var selector = data.id;
+    if ( !$.waitStatus) {
+        $.waitStatus = {};
+    }
+    $.waitStatus[selector] = $( selector ).text();
+    $( selector ).addClass('btn-primary-disabled').prop( 'disabled' , true ).find('span').text( 'Just a sec…...' );
+} );
+
+$.sub( 'done', function( evt, data ){
+    var selector = data.id,
+        text = $.waitStatus[selector];
+    $( selector ).removeClass('btn-primary-disabled').prop( 'disabled' , false ).find('span').text( text );
+} );
+
+$.sub( 'loading:start', function(){
+    if ( !$.loadingStatus) {
+        $.loadingStatus = {};
+    }
+    var tplMask = '<div class="panel-mask" style="position:fixed;left:0;top:0;style:none;"></div>',
+    tplLoading = ''
+        +'<div class="panel-loading" style="style:none;">'
+        +   '<img src="/img/loading2.gif">'
+        +'</div>',
+    $mask = $( tplMask ),
+    $loading = $( tplLoading ),
+    zIndex = 10000;
+    $mask.css({
+        'z-index': zIndex,
+        width: $(window).width() + 'px',
+        height: $(window).height() + 'px'
+    });
+    $loading.css({'z-index': zIndex + 1});
+    $mask.appendTo( document.body );
+    $loading.appendTo( document.body );
+    $mask.show();
+    $loading.show();
+    $.loadingStatus.loading = $loading;
+    $.loadingStatus.mask = $mask;
+} );
+
+$.sub( 'loading:stop', function(){
+    if ( $.loadingStatus ) {
+        $.loadingStatus.loading.remove();
+        $.loadingStatus.mask.remove();
+    }
+});
+
+// dialog block loading
+(function( $ ){
+    $.loadingDialog = function( config ){
+        var mix = ObjectH.mix,
+            _config = config || {
+                title: '',
+                content: ''
+            },
+            conf = mix( _config, {
+                width: 390,
+                padding:'25px 30px',
+                title: config.title,
+                content: '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({content: config.content}),
+                cancel: false
+            }, true ),
+            dialog = $.dialog( conf );
+
+        var oldcontent = dialog.content;
+        dialog.content = function( cont ){
+            var _cont = '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({content: cont});
+            return oldcontent.call( dialog, _cont);
+        };
+        return dialog;
+    }
+})(jQuery);
+
+// dialog alert
+(function( $ ){
+    $.alert = function( content, ok ){
+        ok = ok || function(){};
+        return $.dialog({
+            width: 390,
+            padding:'25px 30px',
+            title: 'Attention',
+            content: content,
+            ok: ok,
+            cancel: false
+        });
+    }
+})(jQuery);
+
+// dialog confirm
+(function( $ ){
+    $.confirm = function( content, ok, cancel ){
+        var _cancel = cancel || function(){};
+        return $.dialog({
+            width: 390,
+            padding:'25px 30px',
+            title: 'Confirm info',
+            content: content,
+            ok: ok,
+            cancel: _cancel,
+            lock: true
+        });
+    }
+})(jQuery);
+
+// wechat code dialog
+$(function(){
+    $( '#wechatcode' ).click(function( e ){
+        e.preventDefault();
+        var $this = $( this ),
+            href = $this.attr( 'href' );
+        $.dialog({
+            title: 'Official WeChat',
+            content: '<img width="200" src="'+ href +'">',
+            width: 250,
+            lock: true
+        });
+    });
+});
+
+// throttle and debounce
+(function( $ ){
+    var _ = {};
+    _.now = function(){
+        return new Date().getTime();
+    };
+    var throttle = function(func, wait, options) {
+        var context, args, result;
+        var timeout = null;
+        var previous = 0;
+        options || (options = {});
+        var later = function() {
+            previous = options.leading === false ? 0 : _.now();
+            timeout = null;
+            result = func.apply(context, args);
+            context = args = null;
+        };
+        return function() {
+            var now = _.now();
+            if (!previous && options.leading === false) previous = now;
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+            if (remaining <= 0) {
+                clearTimeout(timeout);
+                timeout = null;
+                previous = now;
+                result = func.apply(context, args);
+                context = args = null;
+            } else if (!timeout && options.trailing !== false) {
+                timeout = setTimeout(later, remaining);
+            }
+            return result;
+        };
+    };
+
+    var debounce = function(func, wait, immediate) {
+        var timeout, args, context, timestamp, result;
+
+        var later = function() {
+            var last = _.now() - timestamp;
+            if (last < wait) {
+                timeout = setTimeout(later, wait - last);
+            } else {
+                timeout = null;
+                if (!immediate) {
+                    result = func.apply(context, args);
+                    context = args = null;
+                }
+            }
+        };
+
+        return function() {
+            context = this;
+            args = arguments;
+            timestamp = _.now();
+            var callNow = immediate && !timeout;
+            if (!timeout) {
+                timeout = setTimeout(later, wait);
+            }
+            if (callNow) {
+                result = func.apply(context, args);
+                context = args = null;
+            }
+            return result;
+        };
+    };
+
+    $.throttle = throttle;
+    $.debounce = debounce;
+})( jQuery );
+
+// set sys language
+(function($){
+    $.i18nSet = function( el ){
+        var $lan = $( el ),
+            apiGetLan = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/get_languages',
+            apiSetlan = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/set_language',
+            dtd = $.Deferred();
+
+        $.get(apiGetLan, function( rsp ){
+            var rsp = $.parseJSON( rsp );
+            var selectContent = [];
+            if ( rsp.code == 0 ) {
+                for (var i = 0; i < rsp.list.length; i++) {
+                    var item = rsp.list[i],
+                        selected = item.lang == rsp.lang ? 'selected' : '',
+                        option = '<option value="' + item.lang + '" '+ selected +'>' + item['name'] + '</option>';
+                    // clear old conf en item
+                    // if ( item.lang != 'en') {
+                        selectContent.push(option);
+                    // }
+                };
+                $lan.html( selectContent.join('') );
+                dtd.resolve();
+            }
+        });
+
+        $lan.on('change', function( e ){
+            var el = this,
+                val = $(this).val();
+            $.pub('loading:start');
+            $.post(apiSetlan, {language: val}, function( rsp ){
+                var rsp = $.parseJSON( rsp );
+                if ( rsp.code == 0 ) {
+                    location.reload( 1 );
+                } else {
+                    $.alert( rsp.msg );
+                }
+                $.pub('loading:stop');
+            });
+        });
+
+        return dtd.promise();
+    };
+}(jQuery));
+
+(function($){
+    $.pwddecode = function( s ){
+        return s
+        .replace('&amp;','&')
+        .replace('&lt;','<')
+        .replace('&gt;','>')
+        .replace('&quot;','"')
+        .replace('&#039;',"'");
+    };
+})(jQuery);
+
+// global event
+(function($){
+    var dlgReboot,
+        dlgShutdown,
+        dlgRouterName;
+    function getNotice(){
+        $.getJSON('/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/messages', function(rsp){
+            if ( rsp.code == 0 ) {
+                var classname;
+                if ( rsp.count > 0 ) {
+                    classname = 'ico-notice-new';
+                } else {
+                    classname = 'ico-notice';
+                }
+                $('#sysnotice')[0].className = classname;
+                var msgMap = {
+                    '1': '<p>Update available: {$version}，<a href="/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/web/setting/upgrade">Update now</a>。</p>'
+                };
+                var msgHTML = [];
+                for (var i = rsp.messages.length - 1; i >= 0; i--) {
+                    msgHTML.push(msgMap[rsp.messages[i].type].tmpl(rsp.messages[i].data));
+                };
+                $('#noticebar .content').html( msgHTML.join('') );
+
+                if ( rsp.count > 0 ) {
+                    $('#sysnotice').trigger('click');
+                }
+            }
+        });
+    }
+    function reNameHandler(e){
+        e.preventDefault();
+        $.getJSON('/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/router_name')
+        .done(function( rsp ){
+            if ( rsp.code == 0 ) {
+                var html = StringH.tmpl($('#tplrename').html() , {
+                    locale: StringH.encode4HtmlValue(rsp.locale),
+                    name: StringH.encode4HtmlValue(rsp.name)
+                });
+                dlgRouterName = $.dialog({
+                    width: 390,
+                    title: 'Change router name',
+                    content: html,
+                    lock: true
+                });
+                setTimeout(function(){
+                    $.formInit('.mod-rename-dlg');
+                    $.selectBeautify({container: '.mod-rename-dlg'});
+                }, 100);
+            }
+        });
+    }
+    function downloadClientHandler(e){
+        e.preventDefault();
+        $.dialog({
+            width: 390,
+            title: 'Download APP',
+            content: $('#tpldownloadclient').html(),
+            lock: true
+        });
+        setTimeout(function(){
+            $('.onlineimg').each(function(){
+                var img = new Image();
+                var el = this;
+                var remote = el.src;
+                var local = $(el).attr('src-local');
+                img.onerror = function(){
+                    el.src = local;
+                }
+                img.src = remote;
+            });
+        }, 100);
+    }
+    function rebootHandler(e){
+        e.preventDefault();
+        dlgReboot = $.dialog({
+            width: 390,
+            title: 'Reboot router',
+            content: $('#tplreboot').html(),
+            lock: true
+        });
+    }
+    function shutdownHandler(e){
+        e.preventDefault();
+        dlgShutdown = $.dialog({
+            width: 390,
+            title: 'Power off',
+            content: $('#tplshutdown').html(),
+            lock: true
+        });
+    }
+
+    function noticeHandler(e){
+        e.preventDefault();
+        var that = this,
+            $this = $(this),
+            pos = $('#userbar').position(),
+            right,
+            wt = 1160,
+            wwt = $(window).width(),
+            $arrow = $('#noticebar .ico-arrow');
+        if ( $this.hasClass('ico-notice-new') ) {
+            right = wt - pos.left - 20;
+            $arrow.css({'right': right});
+            $('#noticebar').css({'right': (wwt - wt) /2 });
+            $('#noticebar').toggle();
+        }
+        $('#maskMenu').height($(window).height());
+        $('#maskMenu').show();
+    }
+
+    function sysmenuHandler(e){
+        e.preventDefault();
+        var that = this,
+            $this = $(this);
+        if ( $this.hasClass('s-dropdown') ){
+            var ww = $(window).width();
+            var rt = (ww - 1160) / 2;
+            $('#dropmenu').css({right: rt});
+            $('#dropmenu').show();
+            that.className = 'name s-dropup';
+        }else{
+            $('#dropmenu').hide();
+            that.className = 'name s-dropdown';
+        }
+        $('#maskMenu').height($(window).height());
+        $('#maskMenu').show();
+    }
+
+    function maskHandler(e){
+        e.preventDefault();
+        $('#noticebar').hide();
+        $('#dropmenu').hide();
+        $('#maskMenu').hide();
+        $('#sysmenu')[0].className = 'name s-dropdown';
+    }
+
+    $(function(){
+        // notice
+        $('#sysnotice').click(noticeHandler);
+        // user dropmenu
+        $('#sysmenu').click(sysmenuHandler);
+        // space click
+        $('#maskMenu').click(maskHandler);
+        // rename
+        $( 'body' ).delegate( '#toRename', 'click', reNameHandler );
+        // toDownloadClient
+        $( 'body' ).delegate( '#toDownloadClient', 'click', downloadClientHandler );
+        // toReboot
+        $( 'body' ).delegate( '#toReboot', 'click', rebootHandler );
+        // toShutdown
+        $( 'body' ).delegate( '#toShutdown', 'click', shutdownHandler);
+
+        $( 'body' ).delegate( '#shutdownAction', 'click', function( e ){
+            e.preventDefault();
+            dlgShutdown.close();
+            shutdown_window();
+        } );
+
+        $( 'body' ).delegate( '#rebootAction', 'click', function( e ){
+            e.preventDefault();
+            dlgReboot.close();
+            reboot_window();
+        } );
+
+        $( 'body' ).delegate( '#routerNameEdit', 'submit', function( e ){
+            e.preventDefault();
+            var validator = Valid.checkAll( this );
+            var routername = $('#routername').val();
+            var locale = $('#locale').val();
+            if ( validator ) {
+                $.getJSON('/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/set_router_name',{
+                    name: routername,
+                    locale: locale
+                }).done(function(rsp){
+                    if ( rsp.code == 0 ) {
+                        location.reload(1);
+                    } else {
+                        $.alert( rsp.msg )
+                    }
+                });
+            }
+        } );
+
+        // user logined and has global header get notice
+        if ( typeof(GLOBALHEADER) !== 'undefined' && GLOBALHEADER === true ) {
+            getNotice();
+        }
+    });
+})(jQuery);
+</script>
+
+<script type="tmpl/text" id="tmplSpeedTesting">
+<div class="mod-speed-testing">
+    <i class="ico-speed-testing"></i>
+    <p>Testing connection speed…</p>
+    <div class="loading"></div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplSpeedTestNorst">
+<div class="mod-speed-testing">
+    <i class="ico-speed-test"></i>
+    <p>Never tested</p>
+    <div class="btns">
+        <a href="#" class="btn btn-primary" id="btnSpeedReTest"><span>Test</span></a>
+    </div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplSpeedTestErr">
+<div class="mod-speed-testing">
+    <i class="ico-speed-test-err"></i>
+    <p>Couldn&#39;t test network speed</p>
+    <div class="btns">
+        <a href="#" class="btn btn-primary" id="btnSpeedReTest"><span>Test again</span></a>
+    </div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplBandTestErr">
+<div class="mod-speed-testing">
+    <i class="ico-speed-test-err"></i>
+    <p>Couldn&#39;t test network speed</p>
+    <div class="btns">
+        <a href="#" class="btn btn-primary" id="btnBandReTest"><span>Test again</span></a>
+    </div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplSpeedResult">
+<div class="mod-speed-result">
+    <ul class="clearfix">
+        <li class="first">
+            <i class="ico-speed"></i>
+            <span class="num">{$speed}</span>
+            <span class="con">
+                {$unit}<br>
+                {$type}
+            </span>
+        </li>
+        <li>
+            <span class="num">{$bandwidth}</span>
+            <span class="con">
+                Mbps<br>
+                Internet speed
+            </span>
+        </li>
+    </ul>
+    <div class="btns">
+        <a id="btnSpeedReTest" href="#" class="btn btn-primary"><span>Test again</span></a>
+        <a href="#" class="btn btn-primary" id="btnSpeedClose"><span>OK</span></a>
+    </div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplBandResult">
+<div class="mod-speed-result">
+    <ul class="clearfix">
+        <li class="first">
+            <span class="num">{$upband}</span>
+            <span class="con">
+                Mbps<br>
+                Upload bandwidth
+            </span>
+        </li>
+        <li>
+            <span class="num">{$downband}</span>
+            <span class="con">
+                Mbps<br>
+                Download bandwidth
+            </span>
+        </li>
+    </ul>
+    <div class="btns">
+        <a href="#" class="btn btn-primary btn-m" id="btnBandClose"><span>OK</span></a>
+        <a id="btnBandReTest" href="#" class="btn btn-primary btn-m"><span>Test again</span></a>
+    </div>
+</div>
+</script>
+<script type="tmpl/text" id="tmplBandResult2">
+<div class="mod-speed-result">
+    <ul class="clearfix">
+        <li class="first">
+            <span class="num">{$upband}</span>
+            <span class="con">
+                Mbps<br>
+                Upload bandwidth
+            </span>
+        </li>
+        <li>
+            <span class="num">{$downband}</span>
+            <span class="con">
+                Mbps<br>
+                Download bandwidth
+            </span>
+        </li>
+    </ul>
+    <div class="btns">
+        <a href="#" class="btn btn-dft btnBandTest btn-m"><span>Test again</span></a>
+        <a href="#" id="btnBandset" class="btn btn-dft btn-m" data-upband="{$upband}" data-downband="{$downband}"><span>Change</span></a>
+    </div>
+</div>
+</script>
+
+<script type="tmpl/html" id="tplbandsetform">
+<div class="speedset" id="customset">
+    <form action="/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/set_band" class="form form-horizontal form-qos" name="bandwidth" id="bandwidth" method="post">
+        <input type="hidden" name="manual" value="1">
+        <div class="form-item">
+            <label class="k">Upload</label>
+            <span class="v"><input type="text" name="upload" reqMsg="Upload bandwidth" datatype="n-6.2" minValue="0.01" maxValue="1024" class="ipt-text" value="{$upband}"></span>
+            <em class="t">Mbps</em>
+        </div>
+        <div class="form-item">
+            <label class="k">Download</label>
+            <span class="v"><input type="text" name="download" reqMsg="Download bandwidth" datatype="n-6.2" minValue="0.01" maxValue="2048" class="ipt-text" value="{$downband}"></span>
+            <em class="t">Mbps</em>
+        </div>
+        <div class="form-contral">
+            <button type="submit" id="submitbandwirdh" class="btn btn-primary btn-l"><span>OK</span></button>
+        </div>
+    </form>
+</div>
+</script>
+<script>
+(function( $ ){
+
+    var dlgSpeed;
+    var getDownloadSpeed = function(){
+        var dtd = $.Deferred();
+        $.ajax({
+            url: '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/bandwidth_test',
+            type: 'POST',
+            data: { 'new': 1 },
+            dataType: 'json',
+            success: function( rsp ){
+                if ( rsp.code == 0 ) {
+                     dtd.resolve( rsp );
+                } else {
+                     dtd.reject();
+                }
+            },
+            error: function(){
+                dtd.reject();
+            }
+        });
+        return dtd.promise();
+    };
+    var getUploadSpeed = function(){
+        var dtd = $.Deferred();
+        $.ajax({
+            url: '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqnetdetect/netupspeed',
+            type: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function( rsp ){
+                if ( rsp.code == 0 ) {
+                     dtd.resolve( rsp );
+                } else {
+                     dtd.reject();
+                }
+            },
+            error: function(){
+                dtd.reject();
+            }
+        });
+        return dtd.promise();
+    };
+    var setQosband = function( upload, download ){
+        var dtd = $.Deferred();
+        $.ajax({
+            url: '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/set_band',
+            type: 'POST',
+            data: { upload: upload, download: download },
+            dataType: 'json',
+            success: function( rsp ){
+                if ( rsp.code == 0 ) {
+                     dtd.resolve( rsp );
+                } else {
+                     dtd.reject();
+                }
+            },
+            error: function(){
+                dtd.reject();
+            }
+        });
+        return dtd.promise();
+    };
+    var speedTest = function(){
+        var dtd = $.Deferred();
+        var downspeed, downband, upspeed, upband;
+        var testerror = function(){
+            dlgSpeed.content( $('#tmplSpeedTestErr').html() );
+            dtd.reject();
+        };
+        var downtestdone = function( rsp ){
+            downband = rsp.bandwidth;
+            downspeed = rsp.download;
+            upband = rsp.bandwidth2;
+            upspeed = rsp.upload;
+        };
+        var uptestdone = function( rsp ){
+            upband = rsp.bandwidth;
+            upspeed = rsp.upload;
+        };
+        var setbanddone = function( rsp ){
+            dtd.resolve( downband, upband, downspeed, upspeed );
+        };
+        // start down speed test
+        getDownloadSpeed()
+        .then( function( rsp ){
+            downtestdone.call( null, rsp );
+            return setQosband( upband, downband );
+        }, testerror )
+        // .then( function( rsp ){
+        //     uptestdone.call( null, rsp );
+        //     return setQosband( upband, downband );
+        // }, testerror )
+        .then( function( rsp ){
+            setbanddone.call( null, rsp );
+        }, testerror );
+
+        return dtd.promise();
+    };
+
+    $.sub( 'speed:test', function( evt, data ){
+        var dlg = data.dlg,
+            ishistory = data.ishistory || false,
+            downloadspeed,
+            strdownspeed,
+            unit,
+            bandwidth,
+            speedresult,
+            tpl = $( '#tmplSpeedResult' ).html(),
+            testType = ishistory ? 'Previous speed': 'Internet connection speed';
+        dlgSpeed.testPadding = true;
+
+        var showErr = function(){
+            dlg.content( $( '#tmplSpeedTestErr' ).html() );
+        };
+        var showRsp = function( rsp ){
+            if ( rsp.code === 0 ) {
+                downloadspeed = parseFloat( rsp.download );
+                if ( downloadspeed > 1024 ) {
+                    unit = 'MB/S';
+                    strdownspeed = downloadspeed / 1024;
+                } else {
+                    unit = 'KB/S';
+                    strdownspeed = downloadspeed;
+                }
+                bandwidth = parseFloat( rsp.bandwidth );
+                if ( rsp.bandwidth > 0 ) {
+                    dlg.content( tpl.tmpl( {
+                        speed: strdownspeed.toFixed(2),
+                        unit: unit,
+                        bandwidth: bandwidth.toFixed(2),
+                        type: testType
+                    } ) );
+                } else {
+                    dlg.content( $( '#tmplSpeedTestNorst' ).html() );
+                }
+                if ( !ishistory ) {
+                    dlgSpeed.needreload = true;
+                }
+            } else {
+                showErr();
+            }
+        };
+        if ( ishistory ) {
+            $.ajax({
+                url: '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/bandwidth_test',
+                type: 'POST',
+                dataType: 'json',
+                data: {history: 1 }
+            }).done(function( rsp ){
+                showRsp.call( null , rsp );
+                dlgSpeed.testPadding = false;
+            }).fail(function(){
+                showErr();
+                dlgSpeed.testPadding = false;
+            });
+        } else {
+            $.when( speedTest() )
+            .done(function( downband, upband, downspeed, upspeed ){
+                showRsp.call( null , {
+                    code: 0,
+                    download: downspeed,
+                    bandwidth: downband
+                } );
+                dlgSpeed.testPadding = false;
+            })
+            .fail(function(){
+                showErr();
+                dlgSpeed.testPadding = false;
+            });
+        }
+    } );
+
+    // set bandwidth form callback
+    function setBandWidth( e ){
+        e.preventDefault();
+        var tar = e.target,
+            formName = tar.name,
+            requestURL = tar.action,
+            requestData = $(tar).serialize(),
+            validate = Valid.checkAll( $('#bandwidth')[0] );
+
+        if ( validate ) {
+            $.pub('loading:start');
+            $.ajax({
+                url: requestURL,
+                data: requestData,
+                type: 'POST',
+                dataType: 'json'
+            })
+            .done(function( rsp ){
+                if ( rsp.code === 0 ) {
+                    location.reload( 1 );
+                } else {
+                    $.alert( rsp.msg );
+                }
+                $.pub('loading:stop');
+            });
+        }
+    }
+
+    $.sub( 'band:test', function( evt , data ){
+        var dlg = data.dlg,
+            tpl = $( '#tmplBandResult' ).html(),
+            tpl2 = $( '#tmplBandResult2' ).html();
+        var showRsp = function( downband, upband, downspeed, upspeed ){
+            var result = tpl.tmpl( {
+                downband: downband,
+                upband: upband
+            } );
+            var result2 = tpl2.tmpl( {
+                downband: downband,
+                upband: upband
+            } );
+            dlg.content( result );
+            $('#speedresult').html( result2 );
+        };
+        var showErr = function(){
+            dlg.content( $( '#tmplBandTestErr' ).html() );
+        };
+        dlgSpeed.testPadding = true;
+        $.when( speedTest() )
+            .done(function( downband, upband, downspeed, upspeed ){
+                showRsp.apply( null , [downband, upband, downspeed, upspeed] );
+                dlgSpeed.testPadding = false;
+                dlgSpeed.needreload = true;
+            })
+            .fail(function(){
+                showErr();
+                dlgSpeed.testPadding = false;
+            });
+    } );
+
+    $.sub( 'speed:history', function(){
+        var requestURL = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/bandwidth_test',
+            requestData = { history: 1 };
+        $.getJSON( requestURL, requestData, function( rsp ){
+            if ( rsp.code == 0 ) {
+                var unit = 'KB/S';
+                var speed = parseFloat( rsp.download );
+                var bandwidth = parseFloat( rsp.bandwidth );
+                var bandwidth2 = parseFloat( rsp.bandwidth2 );
+                if ( speed > 1024 ) {
+                    unit = 'MB/S';
+                    speed = speed / 1024;
+                }
+                // $( '#maxSpeed' ).html( speed );
+                // $( '#maxSpeedunit' ).html( unit );
+                // $( '#downloadspeed' ).html( speed );
+                // $( '#downloadspeedunit' ).html( unit );
+                $( '#bandwidth' ).text( bandwidth.toFixed(2) );
+                $( '#banddownload' ).text( bandwidth.toFixed(2) );
+                $( '#bandupload' ).text( bandwidth2.toFixed(2) );
+                $( '#btnBandset' ).attr('data-upband', bandwidth2.toFixed(2)).attr('data-downband', bandwidth.toFixed(2));
+            }
+        } );
+    } );
+
+    $(function(){
+        $( '#btnSpeedTest' ).on( 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed = $.dialog({
+                title: 'Network speed',
+                width: 740,
+                content: $( '#tmplSpeedTesting' ).html(),
+                lock: true,
+                padding: 0,
+                beforeunload: function(){
+                    if ( dlgSpeed.testPadding ) {
+                        alert('Testing…');
+                        return false;
+                    }
+                    if ( dlgSpeed.needreload ) {
+                        $.pub( 'speed:history' );
+                    }
+                }
+            });
+
+            // $.pub( 'speed:test', {dlg: dlgSpeed} );
+            $.pub( 'band:test', {dlg: dlgSpeed} );
+
+        } );
+
+        $( 'body' ).delegate( '.btnBandTest', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed = $.dialog({
+                title: 'Test internet connection',
+                width: 740,
+                content: $( '#tmplSpeedTesting' ).html(),
+                lock: true,
+                padding: 0,
+                beforeunload: function(){
+                    if ( dlgSpeed.testPadding ) {
+                        alert('Testing…');
+                        return false;
+                    }
+                    if ( dlgSpeed.needreload ) {
+                        window.top.location.reload( 1 );
+                    }
+                }
+            });
+
+            $.pub( 'band:test', {dlg: dlgSpeed} );
+
+        } );
+
+        $( 'body' ).delegate( '#btnSpeedReTest', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed.content( $( '#tmplSpeedTesting' ).html() );
+            $.pub( 'speed:test', {dlg: dlgSpeed} );
+        } );
+
+        $( 'body' ).delegate( '#btnSpeedClose', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed.close();
+        } );
+
+        $( 'body' ).delegate( '#btnBandReTest', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed.content( $( '#tmplSpeedTesting' ).html() );
+            $.pub( 'band:test', {dlg: dlgSpeed} );
+        } );
+
+        $( 'body' ).delegate( '#btnBandClose', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed.close();
+        } );
+
+        $( 'body' ).delegate( '.get-history-speed', 'click', function( e ){
+            e.preventDefault();
+            dlgSpeed = $.dialog({
+                title: 'Network speed',
+                width: 740,
+                content: '<div class="mod-speed-testing">Just a sec…</div>',
+                lock: true,
+                padding: 0,
+                beforeunload: function(){
+                    if ( dlgSpeed.testPadding ) {
+                        alert('Testing…');
+                        return false;
+                    }
+                    if ( dlgSpeed.needreload ) {
+                        $.pub( 'speed:history' );
+                    }
+                }
+            });
+            $.pub( 'speed:test', {dlg: dlgSpeed, ishistory: true} );
+        } );
+
+        $('body').delegate( '#btnBandset', 'click', function( e ){
+            e.preventDefault();
+            var upband = $(this).attr('data-upband'),
+                downband = $(this).attr('data-downband');
+            $.dialog({
+                title: 'Mangage Internet bandwidth manually',
+                content: $('#tplbandsetform').html().tmpl({
+                    upband: upband,
+                    downband: downband
+                }),
+                lock: true
+            });
+            setTimeout(function(){
+                $.formInit();
+            }, 100);
+        });
+
+        $( 'body' ).delegate( '#bandwidth', 'submit', setBandWidth );
+    });
+})(jQuery);
+</script>
+<script src="8_files/class.js"></script>
+<script src="8_files/class_002.js"></script>
+<script>
+// net diagnisis
+$.sub('netdiagnosis', function(){
+    var apiNettb = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqnetdetect/nettb';
+    var devline = document.getElementById('devline');
+    var netline = document.getElementById('netline');
+    $.getJSON(apiNettb, function( rsp ){
+        if ( rsp.code == 0 ) {
+            if ( rsp.error == 0 ) {
+                devline.className = 'line line-ok';
+                netline.className = 'line line-ok';
+            } else {
+                devline.className = 'line line-ok';
+                netline.className = 'line line-err';
+            }
+        }
+    });
+});
+
+// get devices
+$.sub( 'devices:getlist', function( evt, data ){
+    var apiDevicesGet = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/devicelist',
+        apiDevicesGetData = {},
+        macLocal,
+        tplItem = $( '#tmpldevicesitem' ).html(),
+        tplWaper = $('#tmpldeviceswrap').html(),
+        wraper = $('#devicesTables'),
+        devices,
+        deviceslistHtml = [],
+        listHtml = {
+            '0': [],
+            '1': [],
+            '2': [],
+            '3': []
+        },
+        hasDisk = G_FEATURES['hardware']['disk'] === '1';
+
+    $.getJSON( apiDevicesGet, apiDevicesGetData, function( rsp ){
+        if ( rsp.code === 0 ) {
+            devices = rsp.list;
+            macLocal = rsp.mac.toUpperCase();
+            if ( devices.length > 0 ) {
+                for ( var i = 0 ; i < devices.length ; i++ ) {
+                    var d_mac, d_self, d_ip, d_type, d_option, d_signal_level, d_action, d_action2, d_online, d_download, d_dld_speed, d_wan, d_lan, type_html, type_detail, d_html, d_activets,
+                        d_devices_icon = '/img/device_list_unknow.png',
+                        // 0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi
+                        d_type_id,
+                        d_name,
+                        d_origin_name;
+
+                    d_mac = devices[i].mac.toUpperCase();
+
+                    if( $.isArray(devices[i].ip) ){
+                        d_ip = $(devices[i].ip).map(function(){
+                            console.log(this);
+                            return this.ip;
+                        }).get();
+                    } else {
+                        d_ip = [];
+                    }
+
+                    d_type_id = devices[i].type;
+                    d_name = devices[i].name;
+                    d_origin_name = devices[i].oname;
+
+                    d_wan = devices[i].authority.wan;
+                    d_lan = devices[i].authority.lan;
+
+                    if ( devices[i].statistics ) {
+                        d_online = devices[i].statistics.online;
+                        d_download = devices[i].statistics.download;
+                        d_dld_speed = devices[i].statistics.downspeed;
+                    }
+                    if ( devices[i].icon && devices[i].icon !== "") {
+                        d_devices_icon = '/cn/' + devices[i].icon;
+                    }
+
+                    if ( macLocal == d_mac ) {
+                        d_self = true;
+                    } else {
+                        d_self = false;
+                    }
+                    //终端操作
+                    var tplDevAction = '<a data-self="{$d_self}" data-mac="{$d_mac}" data-type="{$d_type}" href="#" class="btn-switch btn-switch-{$status} {$cls}"></a>';
+                    if ( d_wan == 0 ) {
+                        d_action = tplDevAction.tmpl({
+                            'd_self': d_self ? '1':'0',
+                            'd_mac': d_mac,
+                            'd_type': 'wan',
+                            'cls': 'act-add-back',
+                            'status': 'off'
+                        });
+                    } else {
+                        d_action = tplDevAction.tmpl({
+                            'd_self': d_self ? '1':'0',
+                            'd_mac': d_mac,
+                            'd_type': 'wan',
+                            'cls': 'act-kick-out',
+                            'status': 'on'
+                        });
+                    }
+                    if ( d_lan == 0 ) {
+                         d_action2 = tplDevAction.tmpl({
+                            'd_self': d_self ? '1':'0',
+                            'd_mac': d_mac,
+                            'd_type': 'lan',
+                            'cls': 'act-add-back',
+                            'status': 'off'
+                        });
+                    } else {
+                        d_action2 = tplDevAction.tmpl({
+                            'd_self': d_self ? '1':'0',
+                            'd_mac': d_mac,
+                            'd_type': 'lan',
+                            'cls': 'act-kick-out',
+                            'status': 'on'
+                        });
+                    }
+                    if ( d_type_id == 3 ) {
+                        d_action2 = '';
+                    }
+                    d_html = tplItem.tmpl( {
+                        'name' : StringH.encode4HtmlValue(d_name),
+                        'origin_name' : d_origin_name,
+                        'mac' : d_mac,
+                        'devices_icon' : d_devices_icon,
+                        'download' : byteFormat(d_download, 100),
+                        'speed' : byteFormat(d_dld_speed, 100),
+                        'online' : $.secondToDate(d_online),
+                        'option' : d_action,
+                        'option2' : d_action2,
+                        'ip': d_ip,
+                        'isself': d_self,
+                        'hasDisk': hasDisk
+                    } );
+
+                    listHtml[d_type_id].push( d_html );
+                }
+
+                var containerList = [],
+                    containerTitle = ['Ethernet connected devices','Connected devices','Connected devices','Connected devices'];
+
+                for (var key in listHtml) {
+                    var devlen = listHtml[key].length,
+                        devtype = containerTitle[key];
+                    if ( devlen > 0 ) {
+                        containerList.push(
+                            tplWaper.tmpl({
+                                devlen: devlen,
+                                devtype: devtype,
+                                deviceslist: listHtml[key].join(''),
+                                hasDisk: hasDisk
+                            })
+                        );
+                    } else {
+                        if ( key == 2 ) {
+                            containerList.push(
+                                tplWaper.tmpl({
+                                    devlen: devlen,
+                                    devtype: devtype,
+                                    deviceslist: $('#tmpldevices5gempty').html(),
+                                    hasDisk: hasDisk
+                                })
+                            );
+                        }
+                    }
+                }
+                wraper.html( containerList.join('') );
+            }
+        }
+    } );
+} );
+
+//禁止上网
+$.sub( 'devices:kick_out', function( evt, data ){
+    var requestData = {};
+    requestData['mac'] = data.mac;
+    requestData[data.type] = 0;
+    $.pub( 'loading:start' );
+    $.getJSON( '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/set_mac_filter',requestData, function( rsp ){
+        $.pub( 'loading:stop' );
+        if( rsp.code === 0 ){
+            $.pub( 'devices:getlist'  );
+        } else {
+            $.alert( rsp.msg );
+        }
+    } );
+} );
+
+//允许上网
+$.sub( 'devices:add_back', function( evt, data ){
+    var requestData = {};
+    requestData['mac'] = data.mac;
+    requestData[data.type] = 1;
+    $.pub( 'loading:start' );
+    $.getJSON( '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqsystem/set_mac_filter',requestData, function( rsp ){
+        $.pub( 'loading:stop' );
+        if( rsp.code === 0 ){
+            $.pub( 'devices:getlist'  );
+        } else {
+            $.alert( rsp.msg );
+        }
+    } );
+});
+// devices event
+$.sub('devices:addevent', function(){
+    //禁止
+    var actKickOut = $.debounce(function( e ){
+        e.preventDefault();
+        var mac = $(this).attr('data-mac');
+        var type = $(this).attr('data-type');
+        var self = $(this).attr('data-self') === '1';
+        if ( self ) {
+            var cfm = window.confirm('Remove this device?');
+            if ( cfm ) {
+                $.pub( 'devices:kick_out', {'mac' : mac, 'type': type} );
+            }
+        } else {
+            $.pub( 'devices:kick_out', {'mac' : mac, 'type': type} );
+        }
+    } , 300, true );
+    $( 'body' ).delegate( '.act-kick-out', 'click', actKickOut);
+
+    //允许
+    var actKickBack = $.debounce(function( e ){
+        e.preventDefault();
+        var mac = $(this).attr('data-mac');
+        var type = $(this).attr('data-type');
+        $.pub( 'devices:add_back', {'mac' : mac, 'type': type} );
+    } , 300, true );
+    $( 'body' ).delegate( '.act-add-back', 'click', actKickBack);
+});
+
+$.sub( 'wifi:get', function( evt, data ){
+    var apiGetWiFi = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqnetwork/wifi_detail_all',
+        apiGetWiFiData = {};
+    $.getJSON( apiGetWiFi, apiGetWiFiData, function( rsp ){
+        if ( rsp.code === 0 ) {
+            wifiInfo = rsp.info;
+            var wifi24status = wifiInfo[0].status;
+            var wifi50status = wifiInfo[1].status;
+            var wifi24ssid = wifiInfo[0].ssid;
+            var wifi50ssid = wifiInfo[1].ssid;
+            $('#ssid24status')[0].className = wifi24status == 0 ? 'ico ico-wifi-off' : 'ico ico-wifi-on';
+            $('#ssid50status')[0].className = wifi50status == 0 ? 'ico ico-wifi-off' : 'ico ico-wifi-on';
+            $('#ssid24val').text(wifi24ssid);
+            $('#ssid50val').text(wifi50ssid);
+        }
+    });
+} );
+
+$.sub('status:get', function(){
+    var apiSysstatus = '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/status',
+        apiSysstatusData = {};
+
+    function getCpu( data ){
+        $('#cpuused').text( (data.load * 100).toFixed(2) + '%' );
+        $('#cpucore').text( data.core );
+        $('#cpuhz').text( data.hz );
+    }
+    function getMem( data ){
+        $('#memused').text( (data.usage * 100).toFixed(2) + '%' );
+        $('#memtotal').text( data.total );
+        $('#memhz').text( data.hz );
+        $('#memtype').text( data.type );
+    }
+    function getDev(data){
+
+        $('#devcountall').text(data.devcountall);
+        $('.devcountonline').text(data.devcountonline);
+    }
+    function getWan(data){
+        $('.currentspeed').text( byteFormat( data.downspeed, 100) + '/S');
+        $('.currentupspeed').text( byteFormat( data.upspeed, 100) + '/S')
+        $('#maxdownloadspeed').text( byteFormat( data.maxdownloadspeed , 100) + '/S' );
+        $('#downloadcount').text( byteFormat( data.download, 100 ) );
+        $('#uploadcount').text( byteFormat( data.upload, 100 ) );
+    }
+    function getHardware(data){
+        var mapChannel, mapModel;
+        mapChannel = {
+            'current': 'Alpha',
+            'release': 'Stable',
+            'stable': 'Beta'
+        },
+        mapModel = {
+            'R1D': 'Mi Router',
+            'R2D': 'Mi Router 2',
+            'R1CM': 'Mi Router Mini'
+        };
+
+        $('#routermodel').text(mapModel[data.platform] + '('+ data.platform +')');
+        $('#routerversion').text('MiWiFi ' + mapChannel[data.channel] + ' ' + data.version);
+        $('#routermac').text(data.mac);
+        $('#routersn').text(data.sn);
+    }
+    $.getJSON(apiSysstatus, apiSysstatusData, function(rsp){
+        if ( rsp.code == 0 ) {
+            getCpu(rsp.cpu);
+            getMem(rsp.mem);
+            getDev({
+                devcountall: rsp.count.all,
+                devcountonline: rsp.count.online
+            });
+            getWan(rsp.wan);
+            getHardware(rsp.hardware)
+            $.pub('chart:pie_update', {devStatistics: rsp.dev});
+            $.pub('chart:speedUpdate', rsp.wan);
+            $.pub('chart:cpuUpdate', rsp.cpu);
+            $.pub('chart:memUpdate', rsp.mem);
+        }
+    });
+});
+
+$.sub('chart:pie_init', function(evt, data){
+    var pieConfig = {
+        id : 'piechart',
+        wt : 90 * 2,
+        ht : 90 * 2,
+        r : 90,
+        stroke : '#fff',
+        datas: [{value : 1, label : 't1'}],
+        count : {value : 0,label : 'KB'}
+    };
+    $.pieChart = new PieChart(pieConfig);
+});
+//更新流量分布图
+$.sub('chart:pie_update', function(evt, data){
+    var colorMap = ['#33cc33','#2673bf','#ffaa00','#ff6600','#d96cb5','#00baff','#ff4060','#00d990','#d96cca', '#ff4400'];
+    var datas = data.devStatistics;
+    if (datas.length == 0) {
+        return;
+    }
+    var icon_map = [];
+    var conf_datas = [];
+    var count = {};
+    count.value = 0;
+    count.label = 'MB';
+    for (var i = 0; i < datas.length; i++) {
+        var value = parseInt(datas[i].download, 10);
+        var value2 = parseInt(datas[i].downspeed, 10);
+        var item = {
+            value : value,
+            value2 : value2,
+            label : datas[i].devname,
+            color : colorMap[i]
+        };
+        if(value != 0){
+            conf_datas.push(item);
+        }
+        count.value += item.value;
+    };
+
+    var totalCount = (function(val){
+        var ret = byteFormat(val, 10, true);
+        return {
+            value : ret[0],
+            label : ret[1]
+        }
+    })(count.value);
+    $.pieChart.update(conf_datas, totalCount);
+});
+
+$.sub('chart:lineInit',function(evt, data){
+    $.chartLineSpeedDB = [
+        [0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0]
+    ];
+    $.chartLineSpeed = new Linechart({
+        container: document.getElementById('trafficChart'),
+        width: 489,
+        height: 200,
+        maxYval: 10,
+        maxYnum: 5,
+        labelUnit: 'M',
+        lineColor: ["#33cc33","#2673BF"],
+        dotColor: ["#33cc33","#2673BF"],
+        areaColor: ["rgba(53,204,53,0.4)","rgba(38,115,191,0.4)"]
+    });
+
+    $.chartLineCpuDB = [0,0,0,0,0,0,0,0,0,0];
+    $.chartLineCpu = new Linechart({
+        container: document.getElementById('cpuChart'),
+        width: 489,
+        height: 200,
+        maxYval: 100,
+        maxYnum: 5,
+        labelUnit: '%'
+    });
+
+    $.chartLineMemDB = [0,0,0,0,0,0,0,0,0,0];
+    $.chartLineMem = new Linechart({
+        container: document.getElementById('memChart'),
+        width: 489,
+        height: 200,
+        maxYval: 100,
+        maxYnum: 5,
+        labelUnit: '%'
+    });
+});
+$.sub('chart:speedUpdate',function(evt, data){
+    var speed = data.downspeed || 0,
+        speed = parseFloat(speed) / 1024 / 1024,
+        upspeed = data.upspeed || 0,
+        upspeed = parseFloat(upspeed) / 1024 / 1024,
+        history = data.history.split(',');
+    $.chartLineSpeedDB[0].push(speed);
+    $.chartLineSpeedDB[1].push(upspeed);
+    var len = $.chartLineSpeedDB[0].length;
+    var _linedata = $.chartLineSpeedDB[0].slice(-10);
+    var _linedata2 = $.chartLineSpeedDB[1].slice(-10);
+    $.chartLineSpeed.updateMutil(_linedata, _linedata2);
+
+    var clone = _linedata.slice();
+    (function(arr){
+        var sum = 0,
+            len = arr.length,
+            avg;
+        for (var i = 0; i < len; i++) {
+            sum += arr[i];
+        }
+        avg = sum / len * 1024 * 1024;
+        $('#avgspeed').text( byteFormat(avg) + '/S' );
+    })(clone);
+});
+$.sub('chart:cpuUpdate',function(evt, data){
+    var cpu = parseFloat(data.load) * 100;
+    $.chartLineCpuDB.push(cpu);
+    var _linedata = $.chartLineCpuDB.slice(-10);
+    $.chartLineCpu.update( _linedata );
+});
+$.sub('chart:memUpdate',function(evt, data){
+    var mem = parseFloat(data.usage) * 100;
+    $.chartLineMemDB.push(mem);
+    var _linedata = $.chartLineMemDB.slice(-10);
+    $.chartLineMem.update( _linedata );
+});
+
+//PPPoE checkstatus
+$.sub('pppoeStatus', function(evt, data){
+    time = data ? data.time : 0;
+    timer = null;
+    clearTimeout(timer);
+    function ask(){
+        $.ajax({
+            url: '/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/xqnetwork/pppoe_status',
+            type: "GET",
+            dataType: "json",
+            success : function(rsp){
+                var msg,
+                    ip = '-.-.-.-',
+                    mask =  '-.-.-.-',
+                    gateway =  '-.-.-.-',
+                    dns = [],
+                    action = '';
+
+                if(rsp.proto == 'pppoe'){
+                    switch(rsp.status){
+                        case 1 :
+                            msg = 'Dialing…';
+                            timer = setTimeout(ask, 2000);
+                            break;
+                        case 2 :
+                            msg = '拨号成功';
+                            ip = rsp.ip['address'];
+                            mask = rsp.ip['mask'];
+                            gateway = rsp.gw;
+                            dns = rsp.dns;
+                            action = '<a id="pppoeStop" href="#">断开</a>';
+                            break;
+                        case 3 :
+                            msg = rsp.msg || 'Couldn&#39;t dial';
+                            msg = msg + 'Trying special dial mode…';
+                            timer = setTimeout(ask, 2000);
+                            break;
+                        case 4 :
+                            msg = 'Disconnected';
+                            action = '<a id="pppoeStart" href="#">Connect</a>';
+                            // 断开后重新连接查询3次，防止拿不到底层新数据
+                            if ( askcount < 4 ) {
+                                timer = setTimeout(ask, 2000);
+                            }
+                            askcount ++;
+                            break;
+                        default:
+                            break;
+                    }
+                    if ( $.isArray(dns)) {
+                        dns = dns.join('<br>');
+                    }
+                    var statusHTML = StringH.tmpl( $('#tmplWaninfo').html(), {
+                        wantype: 'PPPoE',
+                        status: msg,
+                        ip: ip,
+                        mask: mask,
+                        gateway: gateway,
+                        dns: dns,
+                        username: rsp.pppoename,
+                        action: action
+                    });
+
+                    $( '#wanStatusContent' ).html( statusHTML );
+                } else {
+                    if ( rsp.proto == 'dhcp') {
+                        ip = rsp.ip['address'];
+                        mask = rsp.ip['mask'];
+                        gateway = rsp.gw;
+                        dns = rsp.dns;
+                        if ( $.isArray(dns)) {
+                            dns = dns.join('<br>');
+                        }
+                        if ( ip == '' ) {
+                            timer = setTimeout(ask, 2000);
+                        } else {
+                            clearTimeout( timer );
+                        }
+                        var statusHTML = StringH.tmpl( $('#tmplWaninfo').html(), {
+                            wantype: 'DHCP',
+                            ip: ip,
+                            mask: mask,
+                            gateway: gateway,
+                            dns: dns
+                        });
+                        $( '#wanStatusContent' ).html( statusHTML );
+                    } else {
+                        ip = rsp.ip['address'];
+                        mask = rsp.ip['mask'];
+                        gateway = rsp.gw;
+                        dns = rsp.dns;
+                        if ( $.isArray(dns)) {
+                            dns = dns.join('<br>');
+                        }
+                        var statusHTML = StringH.tmpl( $('#tmplWaninfo').html(), {
+                            wantype: 'Static IP address',
+                            ip: ip,
+                            mask: mask,
+                            gateway: gateway,
+                            dns: dns
+                        });
+                        $( '#wanStatusContent' ).html( statusHTML );
+                    }
+                }
+            }
+        });
+    }
+    setTimeout(ask, time);
+});
+
+$.sub('switchEvent', function(){
+    var timer = null;
+    var statusListener = function(){
+        timer = window.setInterval(function(){
+            $.pub('status:get');
+        }, 10000);
+    };
+    var statusStop = function(){
+        window.clearInterval(timer);
+    }
+    var switchTo = function(idx){
+        var $tab = $('.nav-tab');
+        var $content = $('.nav-tab-content');
+
+        $tab.removeClass('active');
+        $tab.eq(idx).addClass('active');
+
+        $content.hide();
+        $content.eq(idx).show();
+
+        if ( idx == 1 ) {
+            statusListener();
+            location.hash = 'router';
+        } else {
+            statusStop();
+        }
+        if ( idx == 0 ) {
+            $.pub('devices:getlist');
+            location.hash = 'devices';
+        }
+        if ( idx == 2 ) {
+            $.pub('pppoeStatus');
+            location.hash = 'internet';
+        }
+    };
+    $('.nav-tab').click(function(){
+        var idx = $('.nav-tab').index(this);
+        if ( $(this).hasClass('active') ) {
+            return;
+        }
+        switchTo(idx);
+    });
+
+    var hash = location.hash;
+    if ( hash == '') {
+        switchTo(1);
+    }else{
+        if (/devices/.test(hash)) {
+            switchTo(0);
+        }
+        if (/router/.test(hash)) {
+            switchTo(1);
+        }
+        if (/internet/.test(hash)) {
+            switchTo(2);
+        }
+    }
+
+});
+
+$.sub('speedTestAuto', function(){
+    $.getJSON('/cgi-bin/luci/;stok=e91229b6bf72810779dee4115a179634/api/misystem/active', function( rsp ){
+        if ( rsp.code !== 0 ) {
+            alert( rsp.msg );
+        } else {
+            $.pub('speed:history');
+        }
+    });
+});
+
+$(function(){
+    $.pub('netdiagnosis');
+    $.pub('wifi:get');
+    $.pub('speed:history');
+    $.pub('chart:pie_init');
+    $.pub('chart:lineInit');
+    $.pub('status:get');
+    $.pub('devices:addevent');
+    $.pub('switchEvent');
+    $.pub('speedTestAuto');
+});
+</script>
+
+
+</body></html>

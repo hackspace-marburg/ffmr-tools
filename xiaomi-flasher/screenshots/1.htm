@@ -1,0 +1,1344 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="ie6 oldie" lang="zh"><![endif]-->
+<!--[if IE 7]><html class="ie7 oldie" lang="zh"><![endif]-->
+<!--[if IE 8]><html class="ie8 oldie" lang="zh"><![endif]-->
+<!--[if gt IE 8]><!--> <html lang="zh"> <!--<![endif]-->
+<head>
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit">
+<!--[if lt IE 7]>
+<meta http-equiv="refresh" content="0; url=http://miwifi.com/cgi-bin/luci/web/ieblock" />
+<![endif]-->
+<!--[if gte IE 9]>
+<style>
+body {
+   filter: none;
+}
+</style>
+<![endif]-->
+    <title>Mi Router</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="/xiaoqiang/web/css/bc.css?v=0.0.3" rel="stylesheet">
+    <link href="/xiaoqiang/web/css/guide.css?v=0.0.3" rel="stylesheet">
+</head>
+<body>
+<div class="guide-cont-wrap">
+    <div class="for-middle-cont hello-page-cont">
+        <div id="guide-doc">
+            <div id="guide-hd">
+                <div class="mod-guide-hd">
+                    <div class="icons">
+                        
+                            <img src="/xiaoqiang/web/img/EN/bg_login_tit.png?v=0.0.3" height="124">
+                        
+                    </div>
+                    <!-- <p>Hi there!</p> -->
+                    <!-- <div class="languageset clearfix">
+                        <div class="form-item-select form-item-selectlang">
+                            <label class="k"></label>
+                            <span class="v">
+                            <select name="lang" id="lang" class="beautify selectlang" style="width:50px;">
+                            </select>
+                            </span>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div id="guide-bd">
+                <div class="mod-guide-welcome">
+                    <!-- <p class="tit">Take a few minutes to set up your router</p> -->
+                    <div class="start">
+                        <p class="img"><img src="/xiaoqiang/web/img/topograph/router_r1cm_101.png"></p>
+                        <p class="agree">Read<a class="a1" target="_blank" href="/cgi-bin/luci/web/init/agreement">Terms of Service</a>Agree to terms</p>
+                        <a id="btnStart" href="#" class="btn btn-primary btn-l"><span>OK</span></a>
+                        <p class="privacy"><label for="privacy"><input type="checkbox" name="privacy" id="privacy" checked="checked" autocomplete="off" />Add</label><a class="a1" target="_blank" href="/cgi-bin/luci/web/init/privacy">User Experience Improvement Program</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="for-middle"></span>
+</div>
+
+<!--[if lt IE 7]>
+<script>
+try{ document.execCommand("BackgroundImageCache",false,true);} catch(e){}
+</script>
+<![endif]-->
+<div class="mask-menu" id="maskMenu" style="position:fixed;left:0;top:0; width:100%; height:100%; z-index:2; display:none;"></div>
+<div id="dropmenu" class="dropmenu" style="z-index:3; display:none;">
+    <ul>
+        <li><a href="#" id="toRename">Change router name</a></li>
+        <li><a href="/cgi-bin/luci/web/setting/upgrade">Updating…</a></li>
+        <li><a href="#" id="toDownloadClient">Download APP</a></li>
+        <li><a href="#" id="toReboot">Reboot</a></li>
+        
+        <li class="last"><a href="/cgi-bin/luci/web/logout">Sign out</a></li>
+    </ul>
+</div>
+<div id="noticebar" class="noticebar" style="z-index:3; display:none;">
+    <i class="ico-arrow"></i>
+    <div class="content"></div>
+</div>
+<script>
+var i18n = {};
+i18n.dialog = {
+	ok: 'OK',
+	cancel: 'Cancel',
+	loading: 'Just a sec…',
+	dlgtitle: 'Message box'
+};
+i18n.valid = {
+    n_integer: 'Enter a complete {$0}',
+    n_format: 'Use the following format &#34;{$0}&#34;',
+    n_upper: 'Use {$0} characters or less', //注意：{$0}表示允许值，{$1}表示实际值
+    n_lower: 'Use {$0} characters or more',
+    nrange_from: 'Input range vaild',
+    nrange_to: 'Input range vaild',
+    n_useless_zero: 'Look&#39;s like there&#39;s an additional &#34;0&#34; at the beginning of the value you entered.',
+    d_format: 'Enter format &#34;YYYY-MM-DD&#34;',
+    d_upper: 'Date can&#39;t be later than {$0}',
+    d_lower: 'Date can&#39;t be earlier than {$0}',
+    daterange_from: 'Start date can&#39;t be later than end date.',
+    daterange_to: 'End date can&#39;t be earlier than start date',
+    daterange_larger_span: "Can&#39;t exceed {$0} days",
+    text_longer: 'Use {$0} characters or less', //'{$1}字太多，最多允许{$0}字'
+    text_shorter: 'Use {$0} characters or more', //'{$1}字太少，最少允许{$0}字'
+    bytetext_longer: 'Use {$0} characters or more', //'{$1}字节太多，最多允许{$0}字节'
+    bytetext_shorter: 'Use {$0} characters or more', //'{$1}字节太少，最少允许{$0}字节'
+    richtext_longer: 'Use {$0} characters or less',
+    richtext_shorter: 'Use {$0} characters or more',
+    _reconfirm: 'Passwords don&#39;t match.',
+    _time: 'The format of the date you entered is invalid.',
+    _minute: 'The format of the date you entered is invalid.',
+    _email: 'Check the email address you ented',
+    _mobilecode: 'Check the phone number you entered',
+    _phone: 'Check the phone number you entered',
+    _phonewithext: 'Check the phone number you entered',
+    _phonezone: 'Check the area code you entered',
+    _phonecode: 'Check the phone number you entered',
+    _phoneext: 'Check the phone number extension you entered',
+    _zipcode: 'Check the zip code you entered',
+    _idnumber: 'Check the ID number you entered',
+    _bankcard: 'Check the account number you entered',
+    _cnname: 'Check the name you entered',
+    _vcode: 'Check the verification code you entered',
+    _imgfile: 'Only jpg, jpeg, png, gif, tif, or bmp file types are supported.',
+    _regexp: 'Check input fields',
+    _magic: 'Check input fields',
+    _req_text: 'Enter',
+    _req_select: 'Choose {$0}',
+    _req_file: 'Upload {$0}',
+    _logicrequired: '{$0} is invalid.',
+    _ssid: 'Name can&#39;t contain special characters',
+    _macaddr: 'MAC address format is invalid',
+    _weppassword: 'The password you entered is incorrect.',
+    _wifipassword: 'Can&#39;t contain Chinese characters.',
+    _ipaddr: 'IP address consists of four numbers, each ranging from 0 to 255, separated by dots (e.g. 120.134.33.9) ',
+    _url: 'Enter full URL (e.g. http://miwifi.com)'
+};
+</script>
+<script src="/js/jquery-1.8.3.js?v=0.0.3"></script>
+<script src="/js/qwrap.js?v=0.0.3"></script>
+<script src="/js/raphael.js?v=0.0.3"></script>
+<script src="/js/crypto-js/rollups/sha1.js?v=0.0.3"></script>
+<script src="/js/crypto-js/rollups/aes.js?v=0.0.3"></script>
+<script src="/js/valid.js?v=0.0.3"></script>
+<script src="/xiaoqiang/web/js/selectbeautify.js?v=0.0.3"></script>
+<script src="/xiaoqiang/web/js/jquery.dialog.js?v=0.0.3"></script>
+<script src="/xiaoqiang/web/js/jquery.cookie.js?v=0.0.3"></script>
+<script>
+(function(){
+    var hardwareModel = 'R1CM',
+        R1CM = hardwareModel === 'R1CM',
+        R1D = hardwareModel === 'R1D',
+        R2D = hardwareModel === 'R2D';
+    var G_CONFIG = {
+        R1CM : R1CM,
+        R1D: R1D,
+        R2D: R2D
+    };
+    var G_FEATURES = $.parseJSON('{"hardware":{".name":"hardware",".type":"features","disk":"0",".index":4,".anonymous":false,"usb":"1"},"apps":{".name":"apps",".type":"features","apptc":"0",".anonymous":false,".index":3},"wifi":{".name":"wifi",".type":"features","wifi24":"1","wifi50":"1","wifiguest":"0",".anonymous":false,".index":1},"apmode":{".name":"apmode",".type":"features",".index":2,"wifiapmode":"1",".anonymous":false,"lanapmode":"1"},"system":{".name":"system",".type":"features","shutdown":"0","i18n":"1","downloadlogs":"0",".anonymous":false,".index":0}}');
+    window['G_CONFIG'] = G_CONFIG;
+    window['G_FEATURES'] = G_FEATURES;
+}())
+</script>
+
+<script>
+// reboot
+var global_api_reboot = {
+	url : '/cgi-bin/luci/api/xqsystem/reboot',
+	param : {"client":"web"}
+};
+function reboot_window( needconfirm ) {
+	console.log( needconfirm );
+	var reboot = function(){
+			$.getJSON( global_api_reboot.url, global_api_reboot.param, function( rsp ) {
+				if( rsp.code !== 0 ){
+					$.alert( rsp.msg ).time( 1.5*1000 );
+				} else {
+					var ip = rsp.lanIp[0].ip;
+					rebootWait( {
+						lanIp : ip,
+						action : 'Reboot router',
+						refresh : true
+					} );
+				}
+			});
+		};
+	if ( typeof( needconfirm ) !== "undefined" && needconfirm === false ) {
+		reboot();
+		return;
+	}
+	$.confirm('Devices will be disconnected from network while router reboots.',function () {
+			var dlg = this;
+			reboot();
+			dlg.close();
+			return false;
+		});
+}
+// shutdown
+function shutdown_window(){
+	$.confirm('All devices will be disconnected from router.', function () {
+			$.getJSON( '/cgi-bin/luci/api/xqsystem/shutdown', {}, function( rsp ){
+				if( rsp.code !== 0 ){
+					$.alert(rsp.msg).time( 1.5*1000 );
+				} else {
+					$.loadingDialog({
+						title: 'Turn off router',
+						content: 'Wait until router&#39;s notification turns off before disconnecting power source.'
+					});
+				}
+			});
+		});
+}
+//reset
+function reset_window( format ){
+
+	var reset = (function( format ){
+		var requestURL = '/cgi-bin/luci/api/xqsystem/reset',
+			requestData = {
+				format: format ? 1 : 0
+			},
+			wait = function(){
+				rebootWait( {
+					action : 'Restore to factory settings',
+					refresh : true,
+					lanIp: '192.168.31.1'
+				} );
+			},
+			clearCookies = function (){
+				var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+				if ( keys ) {
+					for (var i = keys.length; i--;){
+						document.cookie = keys[i]+'=0;path=/;expires=' + new Date(0).toUTCString();
+					}
+				}
+			};
+
+		return function(){
+			$.getJSON( requestURL , requestData, function( rsp ) {
+				if ( rsp.code !== 0 ) {
+					$.alert( rsp.msg ).time( 3*1000 );
+				}else{
+					// clear cookies
+					clearCookies();
+					//block wait
+					wait();
+				}
+			});
+		}
+	})( format );
+
+	$.confirm('Restore router to it&#39;s factory settings? You can&#39;t reverse this action.', function(){
+		reset();
+	});
+}
+</script>
+<script type="text/tmpl" id="tplrename">
+<div class="mod-rename-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/login_d_pic.png"></p>
+    <div class="form-rename">
+        <form action="#" class="form" id="routerNameEdit">
+            <div class="form-item">
+                <label class="k">Name</label>
+                <span class="v">
+                    <input type="text" name="routername" id="routername" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Name" value="{$name}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-item">
+                <label class="k">Location</label>
+                <span class="v">
+                    <input type="text" name="locale" id="locale" class="ipt-text" autocomplete="off" datatype="bytetext" maxlength="24" reqMsg="Location" value="{$locale}">
+                </span>
+                <em class="t"></em>
+            </div>
+            <div class="form-contral">
+                <button type="submit" class="btn btn-primary btn-l"><span>Save</span></button>
+            </div>
+        </form>
+    </div>
+</div>
+</script>
+<script type="text/tmpl" id="tplshutdown">
+<div class="mod-reboot-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_shutdown.png"></p>
+    <p class="text">All devices will be disconnected from router&#39;s network.</p>
+    <button id="shutdownAction" type="button" class="btn btn-primary btn-l"><span>Turn off router</span></button>
+</div>
+</script>
+<script type="text/tmpl" id="tplreboot">
+<div class="mod-shutdown-dlg">
+    <p class="img"><img src="/xiaoqiang/web/img/ico_reboot.png"></p>
+    <p class="text">Reboot the router and wait 10 seconds. All devices will be disconnected temporarily while the router reboots.</p>
+    <button type="button" id="rebootAction" class="btn btn-primary btn-l"><span>Reboot router</span></button>
+</div>
+</script>
+<script type="text/tmpl" id="tpldownloadclient">
+<div class="mod-downloadclient-dlg">
+    <table>
+        <tr>
+            <td>
+                <i class="ico-down-client ico-down-pc"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqpc_client.exe">Windows</a>
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class="ico-down-client ico-down-mac"></i>
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqmac_client.dmg">OSX</a>
+            </td>
+        </tr>
+        <tr class="last">
+            <td>
+                <i class="ico-down-client ico-down-andriod"></i>
+            
+                <a href="http://bigota.miwifi.com/xiaoqiang/client/xqapp.apk">Android app</a>
+                <img class="onlineimg" src-local="/xiaoqiang/web/img/2dcode.png" src="http://www1.miwifi.com/statics/img/wf_2dcode_an_dl.png">
+            
+            </td>
+            <td class="c1"></td>
+            <td class="c2"></td>
+            <td>
+                <i class="ico-down-client ico-down-iphone"></i>
+                <a href="https://itunes.apple.com/cn/app/id859962702?mt=8&ls=1">iOS</a>
+                <img class="onlineimg" src-local="/xiaoqiang/web/img/2dcode.png" src="http://www1.miwifi.com/statics/img/wf_2dcode_ios_dl.png">
+            </td>
+        </tr>
+    </table>
+</div>
+</script>
+<script>
+if ( !window.console ) {
+    window.console = {
+        log: function(){}
+    };
+}
+/*
+ * jQuery Tiny Pub/Sub
+ * https://github.com/cowboy/jquery-tiny-pubsub
+ *
+ * Copyright (c) 2013 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ */
+
+(function( $ ) {
+
+    var o = $( {} );
+
+    $.sub = function() {
+        o.on.apply( o, arguments );
+    };
+
+    $.unsub = function() {
+        o.off.apply( o, arguments );
+    };
+
+    $.pub = function() {
+        o.trigger.apply( o, arguments );
+    };
+
+}( jQuery ));
+
+var Encrypt = {
+    key: 'a2ffa5c9be07488bbb04a3a47d3c5f6a',
+    iv: '64175472480004614961023454661220',
+    nonce: null,
+    init: function(){
+        var nonce = this.nonceCreat();
+        this.nonce = nonce;
+        return this.nonce;
+    },
+    nonceCreat: function(){
+        var type = 0;
+        var deviceId = '00:1a:a0:74:e1:52';
+        var time = Math.floor(new Date().getTime() / 1000);
+        var random = Math.floor(Math.random() * 10000);
+        return [type, deviceId, time, random].join('_');
+    },
+    oldPwd : function(pwd){
+        return CryptoJS.SHA1(this.nonce + CryptoJS.SHA1(pwd + this.key).toString()).toString();
+    },
+    newPwd: function(pwd, newpwd){
+        var key = CryptoJS.SHA1(pwd + this.key).toString();
+        key = CryptoJS.enc.Hex.parse(key).toString();
+        key = key.substr(0, 32);
+        key = CryptoJS.enc.Hex.parse(key);
+        var password = CryptoJS.SHA1(newpwd + this.key).toString();
+        var iv = CryptoJS.enc.Hex.parse(this.iv);
+        var aes = CryptoJS.AES.encrypt(
+                password,
+                key,
+                {iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
+            ).toString();
+        return aes;
+    }
+};
+
+var pingRouter = function( on, off, ip ){
+    var online = on || function(){},
+        offline = off || function(){},
+        host = ip || location.host,
+        imgUrl = 'http://' + host + '/img/ping.gif',
+        time = 5000,
+        timecounter = 0,
+        wait = function(){
+            console.log('pingRouter:wait');
+            offline();
+        },
+        done = function(){
+            console.log('pingRouter:done');
+            window.clearInterval( timer );
+            online();
+        },
+        loadImg = function( onload, onerror ){
+            var img = new Image();
+            img.onload = onload;
+            img.onerror = onerror;
+            img.src = imgUrl+'?' + (+new Date());
+        },
+        timer = window.setInterval(function() {
+
+            if ( 'onLine' in navigator ) {
+                if ( navigator.onLine ) {
+                    loadImg(
+                        function(){
+                            done();
+                        }, function(){
+                            wait();
+                        }
+                    );
+                } else {
+                    wait();
+                }
+            }else{
+                loadImg(function(){
+                        done();
+                    }, function(){
+                        wait();
+                });
+            }
+        }, time );
+};
+
+var rebootWait = function ( opt ) {
+    var action = opt.action,
+        ip = opt.lanIp || window.location.host,
+        refresh = opt.refresh || false,
+        tStart = ( +new Date() ),
+        tUse,
+        dlgRebootWait = $.loadingDialog({
+            title : 'Rebooting…',
+            content : action + 'Waiting to reboot…'
+        }),
+        online = function(){
+            dlgRebootWait.content( 'Settings applied' );
+            dlgRebootWait.time( 3*1000 );
+            if( refresh ){
+                window.setTimeout( 'window.top.location.href="http://'+ip+'";',3000 );
+            }
+        },
+        offline = function(){
+            tUse = Math.round( ( ( +new Date() ) - tStart ) / 1000 );
+            if ( tUse > 150 ) {
+                dlgRebootWait.content( 'Couldn&#39;t connect to router automatically. ' );
+                return;
+            }
+            dlgRebootWait.content( action + 'Waiting for Wi-Fi restart,  ({$time}seconds)'.tmpl({time: tUse}) );
+        };
+
+    window.setTimeout( function(){
+        pingRouter( online, offline, ip );
+    }, 1000 * 60 );
+};
+
+(function( $ ){
+
+    function formInit( container ) {
+        var clsInput = 'form-item form-item-input',
+            clsEmpty = 'form-item form-item-empty',
+            clsDisabled = 'form-item-disabled',
+            clsError = 'form-item-err',
+            clsPassword = 'form-item-pwd';
+
+        container = container || 'body';
+        $(container).find( '.form-item input' ).each(function(){
+            var me = this,
+                $me = $( me ),
+                parent = $( me.parentNode.parentNode ),
+                label = parent.find( '.k' ),
+                offsetX = $me.position().left;
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            // some input do not need init
+            if ($me.hasClass('no-init')) {
+                return;
+            }
+            if ( me.value !=='' ) {
+                parent[0].className = clsInput;
+            } else {
+                parent[0].className = clsEmpty;
+                if ( offsetX > 0 ) {
+                    label.css({ 'left': offsetX + 10 });
+                }
+            }
+            if ( me.disabled ) {
+                parent.addClass( clsDisabled );
+            }
+            if ( $me.attr('data-type') === 'password' ) {
+                parent.addClass( clsPassword );
+                parent.append( '<i class="bt-showpwd bt-showpwd-off"></i>' );
+            }
+
+            label.on( 'click', function(e){
+                try {
+                    me.focus();
+                } catch ( ex ) {}
+            });
+
+        });
+        var focusHandler = function(){
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            var me = $( this ),
+                parent = $( this.parentNode.parentNode ),
+                label = parent.find( '.k' ),
+                t = parent.find( '.t' ),
+                classname;
+            if (me.hasClass('no-init')) {
+                return;
+            }
+            if ( parent.hasClass( clsPassword ) ) {
+                classname = clsInput + ' ' + clsPassword;
+            } else {
+                classname = clsInput;
+            }
+            if ( parent.hasClass( clsError ) ) {
+                t.hide();
+            }
+            label.css({ 'left': 'auto' });
+            label.hide();
+            parent[0].className = classname;
+        };
+        var blurHandler = function(){
+            var me = this,
+                $me = $( me ),
+                parent = $( me.parentNode.parentNode ),
+                classname,
+                label = parent.find( '.k' ),
+                offsetX = $me.position().left;
+            if ( !( this.type == 'text' || this.type == 'password' ) ) {
+                return;
+            }
+            if ($(this).hasClass('no-init')) {
+                return;
+            }
+            label.show();
+            if ( me.value == '' ) {
+                if ( parent.hasClass( clsPassword ) ) {
+                    classname = clsEmpty + ' ' + clsPassword;
+                } else {
+                    classname = clsEmpty;
+                }
+                if ( offsetX > 0 ) {
+                    label.css({ 'left': offsetX + 10 });
+                } else {
+                    label.css({ 'left': 12 });
+                }
+                parent[0].className = classname;
+            }
+        };
+        function addInputEvent() {
+            $(container).find( '.form-item input' )
+                .on( 'focus', focusHandler )
+                .on( 'blur', blurHandler );
+        };
+
+        function delInputEvent() {
+            $(container).find( '.form-item input' ).off( 'focus', focusHandler );
+            $(container).find( '.form-item input' ).off( 'blur', blurHandler );
+        };
+        // del password event
+        $( 'body' ).undelegate( '.bt-showpwd', 'click' );
+        $( 'body' ).delegate( '.bt-showpwd', 'click', function(e) {
+            console.log( 'showpwd' );
+            var me = this,
+                meclass = 'bt-showpwd',
+                formItem = $(this).closest('.form-item'),
+                input = formItem.find('input'),
+                inputValue = input.val(),
+                inputWrap = formItem.find('.v'),
+                newinput = '',
+                inputHTML = inputWrap.html();
+
+            if( input.attr('type') == 'password' ){
+                newinput = inputHTML.replace( /type\s*=\s*('|")?password('|")?/ig, 'type="text"');
+                inputWrap.html( newinput ).find('input')[0].value = inputValue;
+                me.className = meclass + ' bt-showpwd-on';
+            }else{
+                newinput = inputHTML.replace( /type\s*=\s*('|")?text('|")?/ig, 'type="password"');
+                inputWrap.html( newinput ).find('input')[0].value = inputValue;
+                me.className = meclass + ' bt-showpwd-off';
+            }
+
+            setTimeout( function() {
+                delInputEvent();
+                addInputEvent();
+            }, 0 );
+        });
+
+
+
+        addInputEvent();
+    }
+
+    $.formInit = formInit;
+
+})(jQuery);
+
+/**
+* byte format
+*/
+function byteFormat(number, precision, isarray){
+    var val,
+        label,
+        ret;
+    precision = precision || 100,
+    isarray = isarray || false;
+    if (number > 1024 * 1024 * 1024) {
+        val = Math.floor( number / 1024 / 1024 / 1024 * precision ) / precision;
+        label = 'GB';
+    } else if (number > 1024 * 1024 && number < 1024 * 1024 * 1024){
+        val = Math.floor( number / 1024 / 1024 * precision ) / precision;
+        label = 'MB';
+    }else{
+        val = Math.floor( number / 1024 * precision ) / precision;
+        label = 'KB';
+    }
+
+    if (isarray) {
+        ret = [val, label];
+    }else{
+        ret = val + label;
+    }
+
+    return ret;
+}
+
+
+function secondToHour(time){
+    var pint = function(num){
+            return parseInt(num, 10);
+        },
+        hour = pint(time / 3600.0),
+        minute = pint((parseFloat(time / 3600.0) - hour) * 60),
+        second = pint(time) - hour * 3600 - minute * 60,
+        format = hour + 'h' + minute + 'm' + second + 's';
+    return format;
+}
+
+function secondToDate(second) {
+    var time = parseFloat(second),
+        pint = function(num){
+            return parseInt(num, 10);
+        },
+        day;
+    if (time !== null && time !== "") {
+        if (time > 60 && time < 60 * 60) {
+            time = pint(time / 60.0) + 'm' + pint((parseFloat(time / 60.0) - pint(time / 60.0, 10)) * 60) + 's';
+        }
+        else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+            time = secondToHour(time);
+        }else if (time >= 24* 60 * 60 ) {
+            day = pint(time  / (3600.0 * 24) );
+            time = time - (day * 3600 * 24);
+            time =  day + 'Days' + secondToHour(time);
+        }
+        else {
+            time = pint(time) + 's';
+        }
+    }
+    return time;
+}
+
+/**
+* placeholder
+*/
+(function( $ ){
+    function placeholder(){
+        var isInputSupported = 'placeholder' in document.createElement('input'),
+            isTextareaSupported = 'placeholder' in document.createElement('textarea'),
+            placeHolder_idx = 100000,
+            g = function(id){
+                return document.getElementById(id);
+            };
+
+        if(isInputSupported || isTextareaSupported){
+            return;
+        }
+        //模拟placeholder
+        $('[placeholder]').each(function(){
+            var el = this;
+            var __placeholderTimer = null;
+            var placeHolderElId = 'placeHolder-' + placeHolder_idx++;
+            el.setAttribute('placeHolderEl', placeHolderElId);
+            el.parentNode.style.position = 'relative';
+            var position = $(el).position();
+            var holderVal = $(el).attr('placeholder');
+            var inputPaddingTop = $(el).css('padding-top');
+            var inputBorderTop = $(el).css('border-top-width');
+            var inputPaddingLeft = $(el).css('padding-left');
+            var inputFontSize = $(el).css('font-size');
+            var elPlaceHolder = $('<span style="color:#999; font-size:16px; padding: 9px 4px; position:absolute; display:none;"></span>');
+            elPlaceHolder.css({
+                left: position.left + 1,
+                top: position.top + 1,
+                'padding-top': inputPaddingTop + inputBorderTop,
+                'padding-left': inputPaddingLeft,
+                'font-size': inputFontSize
+            });
+            elPlaceHolder.html(holderVal);
+            elPlaceHolder.attr('id',placeHolderElId);
+            el.parentNode.insertBefore(elPlaceHolder[0], el);
+
+
+            if (el.value =='') {
+                elPlaceHolder.show();
+            }
+
+            elPlaceHolder.on('click', function(e){
+                try {
+                    el.focus();
+                } catch (ex) {}
+            });
+
+            $(el)
+            .on('keydown', function(e){
+                var oldval = $(this).val();
+                oldval = $.trim(oldval);
+                var placeHolderEl = $(this).attr('placeHolderEl');
+                $(g(placeHolderEl)).hide();
+            })
+            .on('blur', function(e){
+                var oldval;
+                var that = $(this);
+                var placeHolderEl = $(this).attr('placeHolderEl');
+
+                clearTimeout(__placeholderTimer);
+                __placeholderTimer = setTimeout(function() { //在360浏览器下，autocomplete会先blur之后N百毫秒之后再change
+                    oldval = that.val();
+                    oldval = $.trim(oldval);
+                    if(oldval === ''){
+                        $(g(placeHolderEl)).show();
+                    }
+                }, 600);
+            });
+        });
+    }
+    $.placeholder = placeholder;
+})( jQuery );
+
+(function( $ ){
+    function pint(num){
+        return parseInt(num, 10);
+    }
+
+    function secondToHour(time){
+        var hour = pint(time / 3600.0),
+            minute = pint((parseFloat(time / 3600.0) - hour) * 60),
+            second = pint(time) - hour * 3600 - minute * 60,
+            format = hour + 'h' + minute + 'm' + second + 's';
+        return format;
+    }
+
+    function secondToDate(second) {
+        var time = parseFloat(second),
+            day;
+        if (time !== null && time !== "") {
+            if (time > 60 && time < 60 * 60) {
+                time = pint(time / 60.0) + 'm' + pint((parseFloat(time / 60.0) - pint(time / 60.0, 10)) * 60) + 's';
+            }
+            else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+                time = secondToHour(time);
+            }else if (time >= 24* 60 * 60 ) {
+                day = pint(time  / (3600.0 * 24) );
+                time = time - (day * 3600 * 24);
+                time =  day + 'Days' + secondToHour(time);
+            }
+            else {
+                time = pint(time) + 's';
+            }
+        }
+        return time;
+    }
+
+    function secondToDate2(second) {
+        var time = parseFloat(second),
+            num = 0,
+            unit = 'Days';
+        console.log( second, time );
+        if (!isNaN(time)) {
+            if (time > 60 && time < 60 * 60) {
+                num = Math.floor(time / 60.0);
+                unit = 'm';
+            } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+                num = Math.floor(time / 3600.0);
+                unit = 'h'
+            } else if (time >= 24 * 60 * 60 ) {
+                num = Math.floor( time  / (3600.0 * 24) );
+                unit =  'Days';
+            } else {
+                num = Math.floor(time);
+                unit = 's';
+            }
+        }
+        return {
+            num: num,
+            unit: unit
+        };
+    }
+
+    $.secondToHour = secondToHour;
+    $.secondToDate = secondToDate;
+    $.secondToDate2 = secondToDate2;
+})( jQuery );
+
+
+$( document ).ajaxSuccess( function( event, xhr, settings ) {
+    var rsp = xhr.responseText;
+    rsp = $.parseJSON( rsp );
+    // console.log(event, xhr, settings);
+    var ignore = [
+        'api\/xqsystem\/login',
+        'api\/xqsystem\/upgrade_rom'
+    ];
+    for (var i = 0; i < ignore.length; i++) {
+        var ignoreTest = new RegExp(ignore[i]);
+        // console.log( ignoreTest );
+        if ( ignoreTest.test( settings.url ) ) {
+            return;
+        }
+    }
+    if ( rsp.code === 401 || rsp.code === 403) {
+        document.location.href =  'http://' + location.host;
+    }
+} );
+
+$.sub( 'wait', function( evt, data ){
+    var selector = data.id;
+    if ( !$.waitStatus) {
+        $.waitStatus = {};
+    }
+    $.waitStatus[selector] = $( selector ).text();
+    $( selector ).addClass('btn-primary-disabled').prop( 'disabled' , true ).find('span').text( 'Just a sec…...' );
+} );
+
+$.sub( 'done', function( evt, data ){
+    var selector = data.id,
+        text = $.waitStatus[selector];
+    $( selector ).removeClass('btn-primary-disabled').prop( 'disabled' , false ).find('span').text( text );
+} );
+
+$.sub( 'loading:start', function(){
+    if ( !$.loadingStatus) {
+        $.loadingStatus = {};
+    }
+    var tplMask = '<div class="panel-mask" style="position:fixed;left:0;top:0;style:none;"></div>',
+    tplLoading = ''
+        +'<div class="panel-loading" style="style:none;">'
+        +   '<img src="/img/loading2.gif">'
+        +'</div>',
+    $mask = $( tplMask ),
+    $loading = $( tplLoading ),
+    zIndex = 10000;
+    $mask.css({
+        'z-index': zIndex,
+        width: $(window).width() + 'px',
+        height: $(window).height() + 'px'
+    });
+    $loading.css({'z-index': zIndex + 1});
+    $mask.appendTo( document.body );
+    $loading.appendTo( document.body );
+    $mask.show();
+    $loading.show();
+    $.loadingStatus.loading = $loading;
+    $.loadingStatus.mask = $mask;
+} );
+
+$.sub( 'loading:stop', function(){
+    if ( $.loadingStatus ) {
+        $.loadingStatus.loading.remove();
+        $.loadingStatus.mask.remove();
+    }
+});
+
+// dialog block loading
+(function( $ ){
+    $.loadingDialog = function( config ){
+        var mix = ObjectH.mix,
+            _config = config || {
+                title: '',
+                content: ''
+            },
+            conf = mix( _config, {
+                width: 390,
+                padding:'25px 30px',
+                title: config.title,
+                content: '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({content: config.content}),
+                cancel: false
+            }, true ),
+            dialog = $.dialog( conf );
+
+        var oldcontent = dialog.content;
+        dialog.content = function( cont ){
+            var _cont = '<p style="padding-bottom:30px;">{$content}</p><div class="loading-bar"></div>'.tmpl({content: cont});
+            return oldcontent.call( dialog, _cont);
+        };
+        return dialog;
+    }
+})(jQuery);
+
+// dialog alert
+(function( $ ){
+    $.alert = function( content, ok ){
+        ok = ok || function(){};
+        return $.dialog({
+            width: 390,
+            padding:'25px 30px',
+            title: 'Attention',
+            content: content,
+            ok: ok,
+            cancel: false
+        });
+    }
+})(jQuery);
+
+// dialog confirm
+(function( $ ){
+    $.confirm = function( content, ok, cancel ){
+        var _cancel = cancel || function(){};
+        return $.dialog({
+            width: 390,
+            padding:'25px 30px',
+            title: 'Confirm info',
+            content: content,
+            ok: ok,
+            cancel: _cancel,
+            lock: true
+        });
+    }
+})(jQuery);
+
+// wechat code dialog
+$(function(){
+    $( '#wechatcode' ).click(function( e ){
+        e.preventDefault();
+        var $this = $( this ),
+            href = $this.attr( 'href' );
+        $.dialog({
+            title: 'Official WeChat',
+            content: '<img width="200" src="'+ href +'">',
+            width: 250,
+            lock: true
+        });
+    });
+});
+
+// throttle and debounce
+(function( $ ){
+    var _ = {};
+    _.now = function(){
+        return new Date().getTime();
+    };
+    var throttle = function(func, wait, options) {
+        var context, args, result;
+        var timeout = null;
+        var previous = 0;
+        options || (options = {});
+        var later = function() {
+            previous = options.leading === false ? 0 : _.now();
+            timeout = null;
+            result = func.apply(context, args);
+            context = args = null;
+        };
+        return function() {
+            var now = _.now();
+            if (!previous && options.leading === false) previous = now;
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+            if (remaining <= 0) {
+                clearTimeout(timeout);
+                timeout = null;
+                previous = now;
+                result = func.apply(context, args);
+                context = args = null;
+            } else if (!timeout && options.trailing !== false) {
+                timeout = setTimeout(later, remaining);
+            }
+            return result;
+        };
+    };
+
+    var debounce = function(func, wait, immediate) {
+        var timeout, args, context, timestamp, result;
+
+        var later = function() {
+            var last = _.now() - timestamp;
+            if (last < wait) {
+                timeout = setTimeout(later, wait - last);
+            } else {
+                timeout = null;
+                if (!immediate) {
+                    result = func.apply(context, args);
+                    context = args = null;
+                }
+            }
+        };
+
+        return function() {
+            context = this;
+            args = arguments;
+            timestamp = _.now();
+            var callNow = immediate && !timeout;
+            if (!timeout) {
+                timeout = setTimeout(later, wait);
+            }
+            if (callNow) {
+                result = func.apply(context, args);
+                context = args = null;
+            }
+            return result;
+        };
+    };
+
+    $.throttle = throttle;
+    $.debounce = debounce;
+})( jQuery );
+
+// set sys language
+(function($){
+    $.i18nSet = function( el ){
+        var $lan = $( el ),
+            apiGetLan = '/cgi-bin/luci/api/xqsystem/get_languages',
+            apiSetlan = '/cgi-bin/luci/api/xqsystem/set_language',
+            dtd = $.Deferred();
+
+        $.get(apiGetLan, function( rsp ){
+            var rsp = $.parseJSON( rsp );
+            var selectContent = [];
+            if ( rsp.code == 0 ) {
+                for (var i = 0; i < rsp.list.length; i++) {
+                    var item = rsp.list[i],
+                        selected = item.lang == rsp.lang ? 'selected' : '',
+                        option = '<option value="' + item.lang + '" '+ selected +'>' + item['name'] + '</option>';
+                    // clear old conf en item
+                    // if ( item.lang != 'en') {
+                        selectContent.push(option);
+                    // }
+                };
+                $lan.html( selectContent.join('') );
+                dtd.resolve();
+            }
+        });
+
+        $lan.on('change', function( e ){
+            var el = this,
+                val = $(this).val();
+            $.pub('loading:start');
+            $.post(apiSetlan, {language: val}, function( rsp ){
+                var rsp = $.parseJSON( rsp );
+                if ( rsp.code == 0 ) {
+                    location.reload( 1 );
+                } else {
+                    $.alert( rsp.msg );
+                }
+                $.pub('loading:stop');
+            });
+        });
+
+        return dtd.promise();
+    };
+}(jQuery));
+
+(function($){
+    $.pwddecode = function( s ){
+        return s
+        .replace('&amp;','&')
+        .replace('&lt;','<')
+        .replace('&gt;','>')
+        .replace('&quot;','"')
+        .replace('&#039;',"'");
+    };
+})(jQuery);
+
+// global event
+(function($){
+    var dlgReboot,
+        dlgShutdown,
+        dlgRouterName;
+    function getNotice(){
+        $.getJSON('/cgi-bin/luci/api/misystem/messages', function(rsp){
+            if ( rsp.code == 0 ) {
+                var classname;
+                if ( rsp.count > 0 ) {
+                    classname = 'ico-notice-new';
+                } else {
+                    classname = 'ico-notice';
+                }
+                $('#sysnotice')[0].className = classname;
+                var msgMap = {
+                    '1': '<p>Update available: {$version}，<a href="/cgi-bin/luci/web/setting/upgrade">Update now</a>。</p>'
+                };
+                var msgHTML = [];
+                for (var i = rsp.messages.length - 1; i >= 0; i--) {
+                    msgHTML.push(msgMap[rsp.messages[i].type].tmpl(rsp.messages[i].data));
+                };
+                $('#noticebar .content').html( msgHTML.join('') );
+
+                if ( rsp.count > 0 ) {
+                    $('#sysnotice').trigger('click');
+                }
+            }
+        });
+    }
+    function reNameHandler(e){
+        e.preventDefault();
+        $.getJSON('/cgi-bin/luci/api/misystem/router_name')
+        .done(function( rsp ){
+            if ( rsp.code == 0 ) {
+                var html = StringH.tmpl($('#tplrename').html() , {
+                    locale: StringH.encode4HtmlValue(rsp.locale),
+                    name: StringH.encode4HtmlValue(rsp.name)
+                });
+                dlgRouterName = $.dialog({
+                    width: 390,
+                    title: 'Change router name',
+                    content: html,
+                    lock: true
+                });
+                setTimeout(function(){
+                    $.formInit('.mod-rename-dlg');
+                    $.selectBeautify({container: '.mod-rename-dlg'});
+                }, 100);
+            }
+        });
+    }
+    function downloadClientHandler(e){
+        e.preventDefault();
+        $.dialog({
+            width: 390,
+            title: 'Download APP',
+            content: $('#tpldownloadclient').html(),
+            lock: true
+        });
+        setTimeout(function(){
+            $('.onlineimg').each(function(){
+                var img = new Image();
+                var el = this;
+                var remote = el.src;
+                var local = $(el).attr('src-local');
+                img.onerror = function(){
+                    el.src = local;
+                }
+                img.src = remote;
+            });
+        }, 100);
+    }
+    function rebootHandler(e){
+        e.preventDefault();
+        dlgReboot = $.dialog({
+            width: 390,
+            title: 'Reboot router',
+            content: $('#tplreboot').html(),
+            lock: true
+        });
+    }
+    function shutdownHandler(e){
+        e.preventDefault();
+        dlgShutdown = $.dialog({
+            width: 390,
+            title: 'Power off',
+            content: $('#tplshutdown').html(),
+            lock: true
+        });
+    }
+
+    function noticeHandler(e){
+        e.preventDefault();
+        var that = this,
+            $this = $(this),
+            pos = $('#userbar').position(),
+            right,
+            wt = 1160,
+            wwt = $(window).width(),
+            $arrow = $('#noticebar .ico-arrow');
+        if ( $this.hasClass('ico-notice-new') ) {
+            right = wt - pos.left - 20;
+            $arrow.css({'right': right});
+            $('#noticebar').css({'right': (wwt - wt) /2 });
+            $('#noticebar').toggle();
+        }
+        $('#maskMenu').height($(window).height());
+        $('#maskMenu').show();
+    }
+
+    function sysmenuHandler(e){
+        e.preventDefault();
+        var that = this,
+            $this = $(this);
+        if ( $this.hasClass('s-dropdown') ){
+            var ww = $(window).width();
+            var rt = (ww - 1160) / 2;
+            $('#dropmenu').css({right: rt});
+            $('#dropmenu').show();
+            that.className = 'name s-dropup';
+        }else{
+            $('#dropmenu').hide();
+            that.className = 'name s-dropdown';
+        }
+        $('#maskMenu').height($(window).height());
+        $('#maskMenu').show();
+    }
+
+    function maskHandler(e){
+        e.preventDefault();
+        $('#noticebar').hide();
+        $('#dropmenu').hide();
+        $('#maskMenu').hide();
+        $('#sysmenu')[0].className = 'name s-dropdown';
+    }
+
+    $(function(){
+        // notice
+        $('#sysnotice').click(noticeHandler);
+        // user dropmenu
+        $('#sysmenu').click(sysmenuHandler);
+        // space click
+        $('#maskMenu').click(maskHandler);
+        // rename
+        $( 'body' ).delegate( '#toRename', 'click', reNameHandler );
+        // toDownloadClient
+        $( 'body' ).delegate( '#toDownloadClient', 'click', downloadClientHandler );
+        // toReboot
+        $( 'body' ).delegate( '#toReboot', 'click', rebootHandler );
+        // toShutdown
+        $( 'body' ).delegate( '#toShutdown', 'click', shutdownHandler);
+
+        $( 'body' ).delegate( '#shutdownAction', 'click', function( e ){
+            e.preventDefault();
+            dlgShutdown.close();
+            shutdown_window();
+        } );
+
+        $( 'body' ).delegate( '#rebootAction', 'click', function( e ){
+            e.preventDefault();
+            dlgReboot.close();
+            reboot_window();
+        } );
+
+        $( 'body' ).delegate( '#routerNameEdit', 'submit', function( e ){
+            e.preventDefault();
+            var validator = Valid.checkAll( this );
+            var routername = $('#routername').val();
+            var locale = $('#locale').val();
+            if ( validator ) {
+                $.getJSON('/cgi-bin/luci/api/misystem/set_router_name',{
+                    name: routername,
+                    locale: locale
+                }).done(function(rsp){
+                    if ( rsp.code == 0 ) {
+                        location.reload(1);
+                    } else {
+                        $.alert( rsp.msg )
+                    }
+                });
+            }
+        } );
+
+        // user logined and has global header get notice
+        if ( typeof(GLOBALHEADER) !== 'undefined' && GLOBALHEADER === true ) {
+            getNotice();
+        }
+    });
+})(jQuery);
+</script>
+
+<script>
+$(function(){
+    window.scrollTo(0, 1);
+    var elBtnStart = $( '#btnStart' ),
+        elAgree = $( '#agree' );
+
+    elBtnStart.on( 'wait', function() {
+        this.className = 'btn btn-primary-disabled';
+        $('span', this).text('Just a sec…');
+    });
+
+    elBtnStart.on( 'click', function(e) {
+        e.preventDefault();
+        if( $(this).hasClass('btn-primary-disabled') ){
+            return;
+        }
+        var privacy = $('#privacy').is(':checked') ? 1 : 0;
+
+        var nonce = Encrypt.init(),
+            oldPwd = Encrypt.oldPwd( 'admin' ),
+            data = {
+                username: 'admin',
+                logtype: 2,
+                password: oldPwd,
+                nonce: nonce,
+                init: 1
+            };
+
+        elBtnStart.trigger( 'wait' );
+        $.getJSON( '/cgi-bin/luci/api/xqsystem/login', data, function( rsp ) {
+            if ( rsp.code == 0 ) {
+                window.location.href = rsp.url + '#privacy=' + privacy;
+            } else {
+                window.location.reload();
+            }
+        });
+    });
+
+    // tag the first init
+    $.cookie('needguide', '1', {
+        path: '/',
+        expires: 7
+    });
+
+    // $.i18nSet('#lang').done(function(){
+    //     $.selectBeautify();
+    // });
+});
+</script>
+</body>
+</html>
