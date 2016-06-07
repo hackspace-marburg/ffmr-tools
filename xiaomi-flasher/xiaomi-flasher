@@ -41,11 +41,9 @@ def ping(address):
     return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
         stdout=subprocess.PIPE) == 0  # TODO distinguish errors 1 and 2.
 
-def mirror(url):
-    """
-    Uses current working directory!
-    """
-    return subprocess.call(['/usr/bin/wget', '--quiet', '--timestamping', url])  # 0.
+def mirror(url, path):
+    return subprocess.call(['/usr/bin/curl', '--silent',
+        '--time-cond', path, '--output', path, url])  # 0.
 
 def initial_setup(driver, address, key, password):
     """
@@ -126,6 +124,8 @@ def start_server_thread(address):
     """
     Returns an instance which supports .server_address to get the port
     and .shutdown() to join the thread.
+
+    Serves files in the current working directory. TODO specify directory.
     """
     server = ThreadedTCPServer((address, 0), SimpleHTTPServer.SimpleHTTPRequestHandler)
 
@@ -135,15 +135,35 @@ def start_server_thread(address):
 
     return server
 
+def find_firmware(manifest, model):
+    for line in manifest.splitlines():
+        fields = line.split()
+        if len(fields) < 4:
+            continue
+        if fields[0] == model:
+            return fields[2:4]  # SHA512SUM, filename
+    return None, None  # Avoid ValueError.
+
+def get_firmware(manifest, model, path):
+    try:
+        resp = requests.get(manifest)
+    except:
+        return False
+    _, fname = find_firmware(resp.text, model)
+    url = urlparse.urljoin(manifest, fname)
+    return mirror(url, path) == 0
+
 if __name__ == '__main__':
     PASSWORD = 'password'
-    driver = selenium.webdriver.Firefox()
-    driver.set_window_size(800, 600)
+    #driver = selenium.webdriver.Firefox()
+    #driver.set_window_size(800, 600)
 
     #print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
     #token = login(driver, ADDRESS, PASSWORD)
     #setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
 
     server = start_server_thread('127.0.0.1')
-    raw_input(server.server_address)
+    #raw_input(server.server_address)
     server.shutdown()
+
+    print get_firmware(MANIFEST, MODEL, "fw.bin")
