@@ -17,7 +17,9 @@ import sys
 import telnetlib
 import threading
 import time
+import urlparse
 
+import requests
 import selenium
 import selenium.webdriver
 
@@ -31,9 +33,19 @@ ABUSE = ("http://{}/cgi-bin/luci/;stok={}/api/xqnetwork/"
 PASSWD = ("http://{}/cgi-bin/luci/;stok={}/api/xqsystem/"
     "set_name_password?oldPwd={}&newPwd={}")
 
+MANIFEST = ("https://firmware.marburg.freifunk.net/experimental/sysupgrade/"
+    "experimental.manifest")
+MODEL = 'xiaomi-miwifi-mini'
+
 def ping(address):
     return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
         stdout=subprocess.PIPE) == 0  # TODO distinguish errors 1 and 2.
+
+def mirror(url):
+    """
+    Uses current working directory!
+    """
+    return subprocess.call(['/usr/bin/wget', '--quiet', '--timestamping', url])  # 0.
 
 def initial_setup(driver, address, key, password):
     """

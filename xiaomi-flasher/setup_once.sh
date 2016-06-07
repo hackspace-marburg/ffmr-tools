@@ -12,6 +12,7 @@ virtualenv2 env
 #env/bin/pip install -U pip
 #env/bin/pip install -U setuptools
 env/bin/pip2 install selenium
+env/bin/pip2 install requests  # TODO use pip freeze.
 
 
 echo 'done.'
