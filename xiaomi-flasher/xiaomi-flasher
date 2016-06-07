@@ -10,9 +10,12 @@ Abuse vulnerability to get Telnet access. Replace firmware with custom OpenWRT.
 import logging  # TODO add everywhere.
 import os
 import re
+import SimpleHTTPServer
+import SocketServer
 import subprocess
 import sys
 import telnetlib
+import threading
 import time
 
 import selenium
@@ -104,10 +107,31 @@ def setup_telnet(driver, address, token, password, new):
     while '{"code":0}' not in driver.page_source:
         time.sleep(5)
 
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    pass
+
+def start_server_thread(address):
+    """
+    Returns an instance which supports .server_address to get the port
+    and .shutdown() to join the thread.
+    """
+    server = ThreadedTCPServer((address, 0), SimpleHTTPServer.SimpleHTTPRequestHandler)
+
+    server_thread = threading.Thread(target=server.serve_forever)
+    server_thread.daemon = True
+    server_thread.start()
+
+    return server
+
 if __name__ == '__main__':
     PASSWORD = 'password'
     driver = selenium.webdriver.Firefox()
     driver.set_window_size(800, 600)
-    print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
-    token = login(driver, ADDRESS, PASSWORD)
-    setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
+
+    #print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
+    #token = login(driver, ADDRESS, PASSWORD)
+    #setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
+
+    server = start_server_thread('127.0.0.1')
+    raw_input(server.server_address)
+    server.shutdown()
