@@ -25,5 +25,10 @@ Bad [parsing code][1] exists. Or refer to where the [manifest gets written][2].
 
 https://github.com/freifunk-gluon/gluon/blob/d2b74b4cf048ecb8706809021332ed3e7c72b2f3/contrib/sigtest.sh
 
+## Offer disaster recovery
+
+1. get stock firmware
+2. prepare USB drive
+
 [1]: https://github.com/FreifunkBremen/mirror/blob/master/gluon-manifest.py
 [2]: https://github.com/freifunk-gluon/gluon/blob/master/Makefile

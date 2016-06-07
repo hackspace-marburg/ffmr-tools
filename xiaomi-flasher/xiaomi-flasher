@@ -126,6 +126,7 @@ def start_server_thread(address):
     and .shutdown() to join the thread.
 
     Serves files in the current working directory. TODO specify directory.
+    TODO disable logging.
     """
     server = ThreadedTCPServer((address, 0), SimpleHTTPServer.SimpleHTTPRequestHandler)
 
@@ -153,6 +154,38 @@ def get_firmware(manifest, model, path):
     url = urlparse.urljoin(manifest, fname)
     return mirror(url, path) == 0
 
+def enter_credentials(telnet, user, password):
+    telnet.read_until("login: ")
+    telnet.write(user + "\n")
+    telnet.read_until("assword: ")  # Should be upper case P.
+    telnet.write(password + "\n")
+
+def flash_via_telnet(address, user, password, path):
+    """
+    Return True or an error string.
+    """
+    try:
+        t = telnetlib.Telnet(address)
+    except:
+        return "couldn't connect"
+    enter_credentials(t, user, password)  # TODO error handling.
+    t.read_until('#')
+
+    t.write('cd /tmp \n')
+
+    dirname, basename = os.path.split(path)
+    os.chdir(dirname)
+    local, _ = t.get_socket().getsockname()
+    server = start_server_thread(local)
+    local, port = server.server_address  # This shouldn't change local.
+    t.write('wget --quiet http://%s:%i/%s \n' % (local, port, basename))
+    t.read_until('#')
+    server.shutdown()
+
+    t.write('md5sum %s && exit \n' % basename)  # "mtd -r write " + FIRMWARE + " OS1 \n".
+    print t.read_all()
+    t.close()
+
 if __name__ == '__main__':
     PASSWORD = 'password'
     #driver = selenium.webdriver.Firefox()
@@ -162,8 +195,6 @@ if __name__ == '__main__':
     #token = login(driver, ADDRESS, PASSWORD)
     #setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
 
-    server = start_server_thread('127.0.0.1')
-    #raw_input(server.server_address)
-    server.shutdown()
-
-    print get_firmware(MANIFEST, MODEL, "fw.bin")
+    PATH = "/tmp/fw.bin"
+    print get_firmware(MANIFEST, MODEL, PATH)
+    flash_via_telnet(ADDRESS, 'root', PASSWORD, PATH)
