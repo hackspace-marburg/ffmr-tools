@@ -1,16 +1,10 @@
-## Avoid hard coding URL to firmware to allow for easier updates
+## Confirm success
 
-1. list https://firmware.marburg.freifunk.net/experimental/sysupgrade/
-2. parse names like `gluon-ffmr-5-experimental-xiaomi-miwifi-mini-sysupgrade.bin` for version number (or use mtime?)
-
-Check firmware build scripts for naming scheme.
-
-## Serve firmware to router so it doesn't need internet connectivity
-
-1. download firmware if *cache* doesn't exist or is outdated
-2. get local IP from Telnet connection
-3. start web server
-4. build URL for wget
+	$ nmcli d disconnect enp0s25
+	$ nmcli d connect enp0s25  # Get new IP after router boots into OpenWRT
+	$ telnet 192.168.1.1
+	# cat /lib/gluon/release 
+	5-experimental
 
 ## Compare hash with manifest to verify download
 
