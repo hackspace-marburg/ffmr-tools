@@ -11,6 +11,7 @@ import argparse
 import logging  # TODO add everywhere.
 import os
 import re
+import shutil
 import SimpleHTTPServer
 import SocketServer
 import subprocess
@@ -157,31 +158,24 @@ def enter_credentials(telnet, user, password):
     telnet.read_until("assword: ")  # Should be upper case P.
     telnet.write(password + "\n")
 
-def flash_via_telnet(address, user, password, path):  # TODO split to distinguish loaded/flashed
-    """
-    Return True or an error string.
-    """
-    try:
-        t = telnetlib.Telnet(address)
-    except:
-        return "couldn't connect"
-    enter_credentials(t, user, password)  # TODO error handling.
-    t.read_until('#')
-
-    t.write('cd /tmp \n')
+def upload(telnet, path):
+    REMOTE = '/tmp'
+    telnet.write('cd %s \n' % REMOTE)
 
     dirname, basename = os.path.split(path)
     os.chdir(dirname)
-    local, _ = t.get_socket().getsockname()
+    local, _ = telnet.get_socket().getsockname()
     server = start_server_thread(local)
     local, port = server.server_address  # This shouldn't change local.
-    t.write('wget --quiet http://%s:%i/%s \n' % (local, port, basename))
-    t.read_until('#')
+    telnet.write('wget --quiet http://%s:%i/%s \n' % (local, port, basename))
+    telnet.read_until('#')
     server.shutdown()
 
-    t.write('md5sum %s && exit \n' % basename)  # "mtd -r write " + FIRMWARE + " OS1 \n".
-    print t.read_all()
-    t.close()
+    return os.path.join(REMOTE, basename)
+
+def flash(telnet, path):
+    telnet.write("mtd -r write %s OS1 \n" % path)
+    telnet.read_unti("reboot")
 
 def parser():
     p = argparse.ArgumentParser()
@@ -198,23 +192,44 @@ def parser():
         help='path to the file (enables caching)')
     p.add_argument('--force', action='store_true', default=False,
         help="do not update the cache")
-    p.add_argument('--from', default='fresh',
-        help="current state of the roter (fresh, open, loaded)")
-    p.add_argument('--to', default='flashed',
-        help="desired state of the router (open, loaded, flashed)")
+    p.add_argument('--skip', action='append', default=[],
+        choices='setup crack upload flash'.split(),
+        help='what not to do')
     return p
 
 if __name__ == '__main__':
-    args = parser().parse_args()
-    print args  # TODO mkdtemp
+    args = parser().parse_args()  # TODO def main()
 
-    #driver = selenium.webdriver.Firefox()
-    #driver.set_window_size(800, 600)
+    temp = None
+    if not args.firmware:
+        temp = tempfile.mkdtemp()
+        args.firmware = os.path.join(temp, 'fw.bin')
 
-    #print(initial_setup(driver, ADDRESS, 'freufunk', PASSWORD))
-    #token = login(driver, ADDRESS, PASSWORD)
-    #setup_telnet(driver, ADDRESS, token, PASSWORD, PASSWORD)
+    if 'setup' not in args.skip or 'crack' not in args.skip:
+        # TODO use constants to fail early.
+        driver = selenium.webdriver.Firefox()  # TODO only import selenium here.
+        driver.set_window_size(800, 600)
+    if 'setup' not in args.skip:
+        if initial_setup(driver, args.address, args.password, args.password) is not True:
+            sys.exit(1)
+    if 'crack' not in args.skip:
+        token = login(driver, args.address, args.password)
+        setup_telnet(driver, args.address, token, args.password, args.password)
+    if 'upload' not in args.skip:
+        try:
+            telnet = telnetlib.Telnet(args.address)
+        except:
+            sys.exit(2)
+        enter_credentials(telnet, 'root', args.password)  # TODO error handling.
+        telnet.read_until('#')
 
-    PATH = "/tmp/fw.bin"
-    print get_firmware(MANIFEST, MODEL, PATH)
-    flash_via_telnet(ADDRESS, 'root', PASSWORD, PATH)
+        get_firmware(args.manifest, args.model, args.firmware)
+        remote = upload(telnet, args.firmware)
+
+        if 'flash' not in args.skip:  # TODO handle flash without upload.
+            flash(telnet, remote)
+
+        telnet.close()
+
+    if temp:
+        shutil.rmtree(temp)
