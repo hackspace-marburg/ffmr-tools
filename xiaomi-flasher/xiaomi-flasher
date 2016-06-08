@@ -35,10 +35,6 @@ ABUSE = ("http://{}/cgi-bin/luci/;stok={}/api/xqnetwork/"
 PASSWD = ("http://{}/cgi-bin/luci/;stok={}/api/xqsystem/"
     "set_name_password?oldPwd={}&newPwd={}")
 
-def ping(address):
-    return subprocess.call(['/usr/bin/ping', '-c1', address],  # Only 1 ping!
-        stdout=subprocess.PIPE) == 0  # TODO distinguish errors 1 and 2.
-
 def mirror(url, path):
     return subprocess.call(['/usr/bin/curl', '--silent',
         '--time-cond', path, '--output', path, url])  # 0.
