@@ -44,14 +44,17 @@ def initial_setup(driver, address, key, password):
     Return True or an error string.
     """
     driver.get('http://%s' % address)
-    if 'Mi Router' not in driver.title:
+    if 'xiaoqiang' not in driver.page_source:
         return 'page not recognized'  # TODO exceptions.
-    if 'Enter administrator password' in driver.page_source:
+    try:
+        driver.find_element_by_id('password')
         return 'already set up'
+    except NotFound:
+        pass
     try:
         driver.find_element_by_id('btnStart').click()
         time.sleep(15)
-        driver.find_element_by_link_text('Mode (Set up Wi-Fi network)').click()
+        driver.find_element_by_xpath("//a[@data-to='pppoeorssidpwd']").click()
         time.sleep(5)
     except NotFound:
         return 'page lacks button'
@@ -72,11 +75,7 @@ def initial_setup(driver, address, key, password):
         time.sleep(10)
     except (NotFound, IndexError):
         return 'page lacks password field'
-    PROGRESS = 'Setting up'
-    if PROGRESS not in driver.page_source:
-        return 'saving password took too long'
-    while PROGRESS in driver.page_source:
-        time.sleep(5)  # TODO timeout.
+    time.sleep(30)  # TODO language agnostic check for success.
     return True
 
 def login(driver, address, password):
@@ -84,8 +83,6 @@ def login(driver, address, password):
     Return token or False.
     """
     driver.get('http://%s' % address)
-    if 'Enter administrator password' not in driver.page_source:
-        return False  # TODO exceptions.
     try:
         field = driver.find_element_by_id('password')
         field.click()
@@ -93,7 +90,7 @@ def login(driver, address, password):
         field.send_keys(RETURN)
         time.sleep(10)
     except NotFound:
-        return False
+        return False  # TODO exceptions.
     match = re.search(r'stok=([a-f0-9]+)', driver.current_url)
     if not match:
         return False
