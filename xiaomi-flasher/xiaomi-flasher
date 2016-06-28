@@ -168,7 +168,7 @@ def upload(telnet, path):
 
 def flash(telnet, path):
     telnet.write("mtd -r write %s OS1 \n" % path)
-    telnet.read_unti("reboot")
+    # TODO confirm success.
 
 def parser():
     p = argparse.ArgumentParser()
@@ -223,6 +223,11 @@ if __name__ == '__main__':
             flash(telnet, remote)
 
         telnet.close()
+
+    try:
+        driver.close()
+    except:
+        pass
 
     if temp:
         shutil.rmtree(temp)
