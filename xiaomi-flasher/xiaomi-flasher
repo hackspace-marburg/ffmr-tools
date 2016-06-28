@@ -172,7 +172,7 @@ def upload(telnet, path):
 
 def flash(telnet, path):
     telnet.write("mtd -r write %s OS1 \n" % path)
-    # TODO confirm success.
+    # TODO confirm success (see screenshot 11)
 
 def parser():
     p = argparse.ArgumentParser()

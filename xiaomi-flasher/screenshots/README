@@ -30,3 +30,10 @@
 
 1. call LuCI URL to start telnet server (see screenshot 9)
 2. use URL to change password (10)
+
+## Flash via Telnet
+
+1. login
+2. download image
+3. write to flash (see screenshot 11)
+4. close the telnet session, which probably is broken already

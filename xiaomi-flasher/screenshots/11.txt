@@ -1,0 +1,22 @@
+$ telnet 192.168.31.1
+Trying 192.168.31.1...
+Connected to 192.168.31.1.
+Escape character is '^]'.
+XiaoQiang login: root
+Password: 
+
+
+BusyBox v1.19.4 (2016-01-28 18:04:09 CST) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+ -----------------------------------------------------
+        Welcome to XiaoQiang!
+ -----------------------------------------------------
+root@XiaoQiang:~#
+root@XiaoQiang:~# cd /tmp
+root@XiaoQiang:/tmp# mtd -r write fw.bin OS1
+Unlocking OS1 ...
+
+Writing from fw.bin to OS1 ...     
+Rebooting ...
+
