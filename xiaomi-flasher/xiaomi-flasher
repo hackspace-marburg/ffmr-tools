@@ -75,7 +75,11 @@ def initial_setup(driver, address, key, password):
         time.sleep(10)
     except (NotFound, IndexError):
         return 'page lacks password field'
-    time.sleep(30)  # TODO language agnostic check for success.
+    PROGRESS = 'Setting up'
+    if PROGRESS not in driver.page_source:
+        return 'saving password took too long'
+    while PROGRESS in driver.page_source:
+        time.sleep(5)  # TODO timeout.
     return True
 
 def login(driver, address, password):
