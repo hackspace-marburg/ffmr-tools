@@ -2,7 +2,7 @@
 
 import requests
 import re
-from ipaddress import ip_address, ip_network
+from ipaddress import ip_address, ip_network, AddressValueError
 from datetime import datetime
 
 
@@ -42,7 +42,7 @@ def map_hostnames_to_addresses(nodes, hostname_regex, subnet) -> dict:
 				continue
 
 			mapped_hostnames[hostname] = address
-		except AddressValueError:
+		except (AddressValueError, IndexError):
 			pass
 
 	return mapped_hostnames
@@ -63,4 +63,3 @@ for hostname, address in sorted(mapped_hostnames.items()):
 			path_width=max_hostname_length
 		)
 	)
-	
